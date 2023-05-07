@@ -1,0 +1,60 @@
+{
+  "name": "tpecapp",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "6.7.0",
+    "express": "^4"
+  },
+  "devDependencies": {
+    "@sap/cds-dk": "^6.7.2",
+    "@sap/ux-specification": "^1.108.3",
+    "axios": "^1.4.0",
+    "chai": "^4.3.7",
+    "chai-as-promised": "^7.1.1",
+    "chai-subset": "^1.6.0",
+    "jest": "^29.5.0",
+    "sqlite3": "^5"
+  },
+  "scripts": {
+    "test2": "npm run jest2",
+    "test": "npm run jest",
+    "jest2": "npx jest --detectOpenHandles --testNamePattern='method'",
+    "jest": "npx jest --detectOpenHandles",
+    "start": "cds-serve",
+    "watch-users": "cds watch --open users/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-points": "cds watch --open points/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-periods": "cds watch --open periods/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-week": "cds watch --open week/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-schedule": "cds watch --open schedule/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-report": "cds watch --open report/webapp/index.html?sap-ui-xx-viewCache=false"
+  },
+  "jest": {
+    "testTimeout": 20000,
+    "testMatch": [
+      "**/*.test.js"
+    ]
+  },
+  "mocha": {
+    "recursive": true,
+    "parallel": true,
+    "timeout": 6666
+  },
+  "sapux": [
+    "app/users",
+    "app/points",
+    "app/periods",
+    "app/users",
+    "app/points",
+    "app/periods",
+    "app/users",
+    "app/users",
+    "app/users",
+    "app/week",
+    "app/schedule",
+    "app/report"
+  ]
+}

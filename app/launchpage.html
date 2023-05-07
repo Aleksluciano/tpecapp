@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script>
+        window['sap-ushell-config'] = {
+            defaultRenderer: 'fiori2',
+            applications: {
+                "users-app": {
+                    title: "Usuários",
+                    description: "Usuários do sistema",
+                    additionalInformation: "SAPUI5.Component=ns.users",
+                    applicationType: "URL",
+                    url: "./users/webapp",
+                    navigationMode: "embedded"
+                },
+                "points-app": {
+                    title: "Pontos",
+                    description: "Pontos de trabalho",
+                    additionalInformation: "SAPUI5.Component=ns.points",
+                    applicationType: "URL",
+                    url: "./points/webapp",
+                    navigationMode: "embedded"
+                },
+                "periods-app": {
+                    title: "Períodos",
+                    description: "Períodos de trabalho",
+                    additionalInformation: "SAPUI5.Component=ns.periods",
+                    applicationType: "URL",
+                    url: "./periods/webapp",
+                    navigationMode: "embedded"
+                },
+                "week-app": {
+                    title: "Semana",
+                    description: "Dias da semana",
+                    additionalInformation: "SAPUI5.Component=ns.week",
+                    applicationType: "URL",
+                    url: "./week/webapp",
+                    navigationMode: "embedded"
+                },
+                "schedule-app": {
+                    title: "Escala",
+                    description: "Escalas de trabalho",
+                    additionalInformation: "SAPUI5.Component=ns.schedule",
+                    applicationType: "URL",
+                    url: "./schedule/webapp",
+                    navigationMode: "embedded"
+                },
+                "report-app": {
+                    title: "Relatório",
+                    description: "Relatório de designações",
+                    additionalInformation: "SAPUI5.Component=ns.report",
+                    applicationType: "URL",
+                    url: "./report/webapp",
+                    navigationMode: "embedded"
+                }
+            }
+        };
+    </script>
+
+    <script src="https://ui5.sap.com/test-resources/sap/ushell/bootstrap/sandbox.js"></script>
+    <script src="https://ui5.sap.com/resources/sap-ui-core.js" data-sap-ui-libs="sap.m, sap.ushell, sap.fe.templates"
+        data-sap-ui-compatVersion="edge" data-sap-ui-theme="sap_fiori_3" data-sap-ui-frameOptions="allow"
+        data-sap-ui-bindingSyntax="complex"></script>
+    <script>
+        sap.ui.getCore().attachInit(function () {
+            sap.ushell.Container.createRenderer().placeAt('content');
+        });
+    </script>
+</head>
+
+<body class="sapUiBody" id="content"></body>
+
+</html>

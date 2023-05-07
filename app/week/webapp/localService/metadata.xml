@@ -1,0 +1,622 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="TPEService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="Users" EntityType="TPEService.Users">
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="Users"/>
+                </EntitySet>
+                <EntitySet Name="Points" EntityType="TPEService.Points">
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="Points"/>
+                </EntitySet>
+                <EntitySet Name="Periods" EntityType="TPEService.Periods">
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="Periods"/>
+                </EntitySet>
+                <EntitySet Name="Week" EntityType="TPEService.Week">
+                    <NavigationPropertyBinding Path="point" Target="Points"/>
+                    <NavigationPropertyBinding Path="period" Target="Periods"/>
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="Week"/>
+                </EntitySet>
+                <EntitySet Name="DaysOfWeek" EntityType="TPEService.DaysOfWeek">
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="DaysOfWeek"/>
+                </EntitySet>
+                <EntitySet Name="Dispo" EntityType="TPEService.Dispo">
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="Dispo"/>
+                </EntitySet>
+            </EntityContainer>
+            <EntityType Name="Users">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                    <PropertyRef Name="name"/>
+                    <PropertyRef Name="age"/>
+                    <PropertyRef Name="lastime"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" Nullable="false"/>
+                <Property Name="age" Type="Edm.String" Nullable="false"/>
+                <Property Name="lastime" Type="Edm.String" Nullable="false"/>
+                <Property Name="seg" Type="Edm.Int32"/>
+                <Property Name="ter" Type="Edm.Int32"/>
+                <Property Name="qua" Type="Edm.Int32"/>
+                <Property Name="qui" Type="Edm.Int32"/>
+                <Property Name="sex" Type="Edm.Int32"/>
+                <Property Name="sab" Type="Edm.Int32"/>
+                <Property Name="dom" Type="Edm.Int32"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="TPEService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="TPEService.Users"/>
+            </EntityType>
+            <EntityType Name="Points">
+                <Key>
+                    <PropertyRef Name="name"/>
+                    <PropertyRef Name="capacity"/>
+                    <PropertyRef Name="descr"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="name" Type="Edm.String" Nullable="false"/>
+                <Property Name="capacity" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="descr" Type="Edm.String" Nullable="false"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="TPEService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="TPEService.Points"/>
+            </EntityType>
+            <EntityType Name="Periods">
+                <Key>
+                    <PropertyRef Name="name"/>
+                    <PropertyRef Name="descr"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="name" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="descr" Type="Edm.String" Nullable="false"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="TPEService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="TPEService.Periods"/>
+            </EntityType>
+            <EntityType Name="Week">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="name" Type="Edm.String"/>
+                <NavigationProperty Name="point" Type="TPEService.Points">
+                    <ReferentialConstraint Property="point_name" ReferencedProperty="name"/>
+                    <ReferentialConstraint Property="point_capacity" ReferencedProperty="capacity"/>
+                    <ReferentialConstraint Property="point_descr" ReferencedProperty="descr"/>
+                </NavigationProperty>
+                <Property Name="point_name" Type="Edm.String"/>
+                <Property Name="point_capacity" Type="Edm.Int32"/>
+                <Property Name="point_descr" Type="Edm.String"/>
+                <NavigationProperty Name="period" Type="TPEService.Periods">
+                    <ReferentialConstraint Property="period_name" ReferencedProperty="name"/>
+                    <ReferentialConstraint Property="period_descr" ReferencedProperty="descr"/>
+                </NavigationProperty>
+                <Property Name="period_name" Type="Edm.Int32"/>
+                <Property Name="period_descr" Type="Edm.String"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="TPEService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="TPEService.Week"/>
+            </EntityType>
+            <EntityType Name="DaysOfWeek">
+                <Key>
+                    <PropertyRef Name="code"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="code" Type="Edm.String" Nullable="false"/>
+                <Property Name="day" Type="Edm.String"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="TPEService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="TPEService.DaysOfWeek"/>
+            </EntityType>
+            <EntityType Name="Dispo">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="day" Type="Edm.String"/>
+                <Property Name="period" Type="Edm.String"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="TPEService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="TPEService.Dispo"/>
+            </EntityType>
+            <EntityType Name="DraftAdministrativeData">
+                <Key>
+                    <PropertyRef Name="DraftUUID"/>
+                </Key>
+                <Property Name="DraftUUID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="CreationDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="CreatedByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="DraftIsCreatedByMe" Type="Edm.Boolean"/>
+                <Property Name="LastChangeDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="LastChangedByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="InProcessByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="DraftIsProcessedByMe" Type="Edm.Boolean"/>
+            </EntityType>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="TPEService.Users"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="TPEService.Users"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="TPEService.Points"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="TPEService.Points"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="TPEService.Periods"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="TPEService.Periods"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="TPEService.Week"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="TPEService.Week"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="TPEService.DaysOfWeek"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="TPEService.DaysOfWeek"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="TPEService.Dispo"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="TPEService.Dispo"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="TPEService.Users"/>
+                <ReturnType Type="TPEService.Users"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="TPEService.Points"/>
+                <ReturnType Type="TPEService.Points"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="TPEService.Periods"/>
+                <ReturnType Type="TPEService.Periods"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="TPEService.Week"/>
+                <ReturnType Type="TPEService.Week"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="TPEService.DaysOfWeek"/>
+                <ReturnType Type="TPEService.DaysOfWeek"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="TPEService.Dispo"/>
+                <ReturnType Type="TPEService.Dispo"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="TPEService.Users"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="TPEService.Users"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="TPEService.Points"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="TPEService.Points"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="TPEService.Periods"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="TPEService.Periods"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="TPEService.Week"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="TPEService.Week"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="TPEService.DaysOfWeek"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="TPEService.DaysOfWeek"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="TPEService.Dispo"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="TPEService.Dispo"/>
+            </Action>
+            <Annotations Target="TPEService.EntityContainer/Users">
+                <Annotation Term="Common.DraftRoot">
+                    <Record Type="Common.DraftRootType">
+                        <PropertyValue Property="ActivationAction" String="TPEService.draftActivate"/>
+                        <PropertyValue Property="EditAction" String="TPEService.draftEdit"/>
+                        <PropertyValue Property="PreparationAction" String="TPEService.draftPrepare"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="TPEService.Users/createdAt">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                </Annotations>
+                <Annotations Target="TPEService.Users/createdBy">
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="Core.Immutable" Bool="true"/>
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                        </Annotations>
+                        <Annotations Target="TPEService.Users/modifiedAt">
+                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                            <Annotation Term="Core.Computed" Bool="true"/>
+                            <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                            </Annotations>
+                            <Annotations Target="TPEService.Users/modifiedBy">
+                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                <Annotation Term="Core.Computed" Bool="true"/>
+                                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                    <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                    </Annotations>
+                                    <Annotations Target="TPEService.Users/ID">
+                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                    </Annotations>
+                                    <Annotations Target="TPEService.Users/name">
+                                        <Annotation Term="Common.Label" String="Nome"/>
+                                    </Annotations>
+                                    <Annotations Target="TPEService.Users/age">
+                                        <Annotation Term="Common.Label" String="Idade"/>
+                                    </Annotations>
+                                    <Annotations Target="TPEService.Users/lastime">
+                                        <Annotation Term="Common.Label" String="Última designação(AAAAMMDD)"/>
+                                    </Annotations>
+                                    <Annotations Target="TPEService.Users/seg">
+                                        <Annotation Term="Common.Label" String="Seg"/>
+                                    </Annotations>
+                                    <Annotations Target="TPEService.Users/ter">
+                                        <Annotation Term="Common.Label" String="Ter"/>
+                                    </Annotations>
+                                    <Annotations Target="TPEService.Users/qua">
+                                        <Annotation Term="Common.Label" String="Qua"/>
+                                    </Annotations>
+                                    <Annotations Target="TPEService.Users/qui">
+                                        <Annotation Term="Common.Label" String="Qui"/>
+                                    </Annotations>
+                                    <Annotations Target="TPEService.Users/sex">
+                                        <Annotation Term="Common.Label" String="Sex"/>
+                                    </Annotations>
+                                    <Annotations Target="TPEService.Users/sab">
+                                        <Annotation Term="Common.Label" String="Sab"/>
+                                    </Annotations>
+                                    <Annotations Target="TPEService.Users/dom">
+                                        <Annotation Term="Common.Label" String="Dom"/>
+                                    </Annotations>
+                                    <Annotations Target="TPEService.Users/IsActiveEntity">
+                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                    </Annotations>
+                                    <Annotations Target="TPEService.Users/HasActiveEntity">
+                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                    </Annotations>
+                                    <Annotations Target="TPEService.Users/HasDraftEntity">
+                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                    </Annotations>
+                                    <Annotations Target="TPEService.Users/DraftAdministrativeData">
+                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                    </Annotations>
+                                    <Annotations Target="TPEService.EntityContainer/Points">
+                                        <Annotation Term="Common.DraftRoot">
+                                            <Record Type="Common.DraftRootType">
+                                                <PropertyValue Property="ActivationAction" String="TPEService.draftActivate"/>
+                                                <PropertyValue Property="EditAction" String="TPEService.draftEdit"/>
+                                                <PropertyValue Property="PreparationAction" String="TPEService.draftPrepare"/>
+                                            </Record>
+                                        </Annotation>
+                                    </Annotations>
+                                    <Annotations Target="TPEService.Points/createdAt">
+                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                        <Annotation Term="Core.Immutable" Bool="true"/>
+                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                        </Annotations>
+                                        <Annotations Target="TPEService.Points/createdBy">
+                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                            <Annotation Term="Core.Immutable" Bool="true"/>
+                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                            <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                </Annotations>
+                                                <Annotations Target="TPEService.Points/modifiedAt">
+                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                    <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                    </Annotations>
+                                                    <Annotations Target="TPEService.Points/modifiedBy">
+                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                            <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                            </Annotations>
+                                                            <Annotations Target="TPEService.Points/name">
+                                                                <Annotation Term="Common.Label" String="Nome"/>
+                                                            </Annotations>
+                                                            <Annotations Target="TPEService.Points/capacity">
+                                                                <Annotation Term="Common.Label" String="Capacidade"/>
+                                                            </Annotations>
+                                                            <Annotations Target="TPEService.Points/descr">
+                                                                <Annotation Term="Common.Label" String="Descrição"/>
+                                                            </Annotations>
+                                                            <Annotations Target="TPEService.Points/IsActiveEntity">
+                                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                            </Annotations>
+                                                            <Annotations Target="TPEService.Points/HasActiveEntity">
+                                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                            </Annotations>
+                                                            <Annotations Target="TPEService.Points/HasDraftEntity">
+                                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                            </Annotations>
+                                                            <Annotations Target="TPEService.Points/DraftAdministrativeData">
+                                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                            </Annotations>
+                                                            <Annotations Target="TPEService.EntityContainer/Periods">
+                                                                <Annotation Term="Common.DraftRoot">
+                                                                    <Record Type="Common.DraftRootType">
+                                                                        <PropertyValue Property="ActivationAction" String="TPEService.draftActivate"/>
+                                                                        <PropertyValue Property="EditAction" String="TPEService.draftEdit"/>
+                                                                        <PropertyValue Property="PreparationAction" String="TPEService.draftPrepare"/>
+                                                                    </Record>
+                                                                </Annotation>
+                                                            </Annotations>
+                                                            <Annotations Target="TPEService.Periods/createdAt">
+                                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                                </Annotations>
+                                                                <Annotations Target="TPEService.Periods/createdBy">
+                                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                    <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                                    <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                        </Annotations>
+                                                                        <Annotations Target="TPEService.Periods/modifiedAt">
+                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                            <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                            </Annotations>
+                                                                            <Annotations Target="TPEService.Periods/modifiedBy">
+                                                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                    <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                                    </Annotations>
+                                                                                    <Annotations Target="TPEService.Periods/name">
+                                                                                        <Annotation Term="Common.Label" String="Número"/>
+                                                                                    </Annotations>
+                                                                                    <Annotations Target="TPEService.Periods/descr">
+                                                                                        <Annotation Term="Common.Label" String="Descrição"/>
+                                                                                    </Annotations>
+                                                                                    <Annotations Target="TPEService.Periods/IsActiveEntity">
+                                                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                    </Annotations>
+                                                                                    <Annotations Target="TPEService.Periods/HasActiveEntity">
+                                                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                    </Annotations>
+                                                                                    <Annotations Target="TPEService.Periods/HasDraftEntity">
+                                                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                    </Annotations>
+                                                                                    <Annotations Target="TPEService.Periods/DraftAdministrativeData">
+                                                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                    </Annotations>
+                                                                                    <Annotations Target="TPEService.EntityContainer/Week">
+                                                                                        <Annotation Term="Common.DraftRoot">
+                                                                                            <Record Type="Common.DraftRootType">
+                                                                                                <PropertyValue Property="ActivationAction" String="TPEService.draftActivate"/>
+                                                                                                <PropertyValue Property="EditAction" String="TPEService.draftEdit"/>
+                                                                                                <PropertyValue Property="PreparationAction" String="TPEService.draftPrepare"/>
+                                                                                            </Record>
+                                                                                        </Annotation>
+                                                                                    </Annotations>
+                                                                                    <Annotations Target="TPEService.Week/createdAt">
+                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                        <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                                                        </Annotations>
+                                                                                        <Annotations Target="TPEService.Week/createdBy">
+                                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                            <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                            <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                                                </Annotations>
+                                                                                                <Annotations Target="TPEService.Week/modifiedAt">
+                                                                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                    <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                                                    </Annotations>
+                                                                                                    <Annotations Target="TPEService.Week/modifiedBy">
+                                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                            <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                                                            </Annotations>
+                                                                                                            <Annotations Target="TPEService.Week/ID">
+                                                                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                            </Annotations>
+                                                                                                            <Annotations Target="TPEService.Week/IsActiveEntity">
+                                                                                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                            </Annotations>
+                                                                                                            <Annotations Target="TPEService.Week/HasActiveEntity">
+                                                                                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                            </Annotations>
+                                                                                                            <Annotations Target="TPEService.Week/HasDraftEntity">
+                                                                                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                            </Annotations>
+                                                                                                            <Annotations Target="TPEService.Week/DraftAdministrativeData">
+                                                                                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                            </Annotations>
+                                                                                                            <Annotations Target="TPEService.EntityContainer/DaysOfWeek">
+                                                                                                                <Annotation Term="Common.DraftRoot">
+                                                                                                                    <Record Type="Common.DraftRootType">
+                                                                                                                        <PropertyValue Property="ActivationAction" String="TPEService.draftActivate"/>
+                                                                                                                        <PropertyValue Property="EditAction" String="TPEService.draftEdit"/>
+                                                                                                                        <PropertyValue Property="PreparationAction" String="TPEService.draftPrepare"/>
+                                                                                                                    </Record>
+                                                                                                                </Annotation>
+                                                                                                            </Annotations>
+                                                                                                            <Annotations Target="TPEService.DaysOfWeek/createdAt">
+                                                                                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                                                                                </Annotations>
+                                                                                                                <Annotations Target="TPEService.DaysOfWeek/createdBy">
+                                                                                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                    <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                    <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                                                                        </Annotations>
+                                                                                                                        <Annotations Target="TPEService.DaysOfWeek/modifiedAt">
+                                                                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                            <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                                                                            </Annotations>
+                                                                                                                            <Annotations Target="TPEService.DaysOfWeek/modifiedBy">
+                                                                                                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                                                                                    </Annotations>
+                                                                                                                                    <Annotations Target="TPEService.DaysOfWeek/IsActiveEntity">
+                                                                                                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                    </Annotations>
+                                                                                                                                    <Annotations Target="TPEService.DaysOfWeek/HasActiveEntity">
+                                                                                                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                    </Annotations>
+                                                                                                                                    <Annotations Target="TPEService.DaysOfWeek/HasDraftEntity">
+                                                                                                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                    </Annotations>
+                                                                                                                                    <Annotations Target="TPEService.DaysOfWeek/DraftAdministrativeData">
+                                                                                                                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                    </Annotations>
+                                                                                                                                    <Annotations Target="TPEService.EntityContainer/Dispo">
+                                                                                                                                        <Annotation Term="Common.DraftRoot">
+                                                                                                                                            <Record Type="Common.DraftRootType">
+                                                                                                                                                <PropertyValue Property="ActivationAction" String="TPEService.draftActivate"/>
+                                                                                                                                                <PropertyValue Property="EditAction" String="TPEService.draftEdit"/>
+                                                                                                                                                <PropertyValue Property="PreparationAction" String="TPEService.draftPrepare"/>
+                                                                                                                                            </Record>
+                                                                                                                                        </Annotation>
+                                                                                                                                    </Annotations>
+                                                                                                                                    <Annotations Target="TPEService.Dispo/createdAt">
+                                                                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                        <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                                                                                                        </Annotations>
+                                                                                                                                        <Annotations Target="TPEService.Dispo/createdBy">
+                                                                                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                            <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                            <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                                                                                                </Annotations>
+                                                                                                                                                <Annotations Target="TPEService.Dispo/modifiedAt">
+                                                                                                                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                                                                                                    </Annotations>
+                                                                                                                                                    <Annotations Target="TPEService.Dispo/modifiedBy">
+                                                                                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                                                                                                            </Annotations>
+                                                                                                                                                            <Annotations Target="TPEService.Dispo/ID">
+                                                                                                                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                                                            </Annotations>
+                                                                                                                                                            <Annotations Target="TPEService.Dispo/IsActiveEntity">
+                                                                                                                                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                            </Annotations>
+                                                                                                                                                            <Annotations Target="TPEService.Dispo/HasActiveEntity">
+                                                                                                                                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                            </Annotations>
+                                                                                                                                                            <Annotations Target="TPEService.Dispo/HasDraftEntity">
+                                                                                                                                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                            </Annotations>
+                                                                                                                                                            <Annotations Target="TPEService.Dispo/DraftAdministrativeData">
+                                                                                                                                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                            </Annotations>
+                                                                                                                                                            <Annotations Target="TPEService.DraftAdministrativeData">
+                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>Draft_DraftAdministrativeData}"/>
+                                                                                                                                                                </Annotations>
+                                                                                                                                                                <Annotations Target="TPEService.DraftAdministrativeData/DraftUUID">
+                                                                                                                                                                    <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>Draft_DraftUUID}"/>
+                                                                                                                                                                    </Annotations>
+                                                                                                                                                                    <Annotations Target="TPEService.DraftAdministrativeData/CreationDateTime">
+                                                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>Draft_CreationDateTime}"/>
+                                                                                                                                                                        </Annotations>
+                                                                                                                                                                        <Annotations Target="TPEService.DraftAdministrativeData/CreatedByUser">
+                                                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>Draft_CreatedByUser}"/>
+                                                                                                                                                                            </Annotations>
+                                                                                                                                                                            <Annotations Target="TPEService.DraftAdministrativeData/DraftIsCreatedByMe">
+                                                                                                                                                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>Draft_DraftIsCreatedByMe}"/>
+                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                <Annotations Target="TPEService.DraftAdministrativeData/LastChangeDateTime">
+                                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>Draft_LastChangeDateTime}"/>
+                                                                                                                                                                                    </Annotations>
+                                                                                                                                                                                    <Annotations Target="TPEService.DraftAdministrativeData/LastChangedByUser">
+                                                                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>Draft_LastChangedByUser}"/>
+                                                                                                                                                                                        </Annotations>
+                                                                                                                                                                                        <Annotations Target="TPEService.DraftAdministrativeData/InProcessByUser">
+                                                                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>Draft_InProcessByUser}"/>
+                                                                                                                                                                                            </Annotations>
+                                                                                                                                                                                            <Annotations Target="TPEService.DraftAdministrativeData/DraftIsProcessedByMe">
+                                                                                                                                                                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>Draft_DraftIsProcessedByMe}"/>
+                                                                                                                                                                                                </Annotations>
+                                                                                                                                                                                            </Schema>
+                                                                                                                                                                                        </edmx:DataServices>
+                                                                                                                                                                                    </edmx:Edmx>
