@@ -107,7 +107,7 @@ describe("TPEService", () => {
           userIndex = users.findIndex(
             (u) =>
               u[dispodayweek[desig.dayWeek]] &&
-              u[dispodayweek[desig.dayWeek]].toString().includes(desig.period)
+              u[dispodayweek[desig.dayWeek]].includes(desig.period)
           );
           //  console.log("A3");
         } else {

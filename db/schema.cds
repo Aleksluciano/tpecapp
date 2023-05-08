@@ -4,22 +4,25 @@ using {managed} from '@sap/cds/common';
 
 
 entity UsersTable : managed {
-    key ID           : UUID            @(Core.Computed: true);
-        name         : String not null @mandatory;
-        gender       : Association to GenTable;
-        birth_date   : Date not null   @UI.HiddenFilter;
-        lastime      : Date not null;
+    key ID           : UUID                    @(Core.Computed: true);
+        name         : String not null         @mandatory;
+        gender       : Association to GenTable @mandatory;
+        birth_date   : Date not null           @mandatory;
+        lastime      : Date not null           @mandatory;
         desativado   : Boolean;
-        seg          : Integer;
-        ter          : Integer;
-        qua          : Integer;
-        qui          : Integer;
-        sex          : Integer;
-        sab          : Integer;
-        dom          : Integer;
+        seg          : String(10);
+        ter          : String(10);
+        qua          : String(10);
+        qui          : String(10);
+        sex          : String(10);
+        sab          : String(10);
+        dom          : String(10);
         criticality  : Integer;
         age          : Integer;
         lastdayCount : Integer;
+        email        : String                  @assert.format: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$';
+        phone        : String                  @assert.format: '^(\([0-9]{2}\))\s([0-9]{4,5})-([0-9]{4})$';
+        whatsapp     : String;
 
 };
 
@@ -37,10 +40,11 @@ entity PeriodsTable : managed {
 }
 
 entity WeekTable : managed {
-    key ID     : UUID @(Core.Computed: true);
-        name   : Association to DaysOfWeekTable;
-        point  : Association to PointsTable;
-        period : Association to PeriodsTable;
+    key ID         : UUID                           @(Core.Computed: true);
+        name       : Association to DaysOfWeekTable @mandatory;
+        point      : Association to PointsTable     @mandatory;
+        period     : Association to PeriodsTable    @mandatory;
+        specialDay : Date;
 }
 
 entity DaysOfWeekTable : managed {
@@ -49,7 +53,7 @@ entity DaysOfWeekTable : managed {
 }
 
 entity GenTable : managed {
-    key code : String;
+    key code : String(1);
         sexo : String;
 }
 

@@ -10,15 +10,53 @@ annotate service.Users with @(UI.LineItem: [
         Value: gender_code,
     },
     {
-        $Type      : 'UI.DataField',
-        Value      : age,
-        Criticality: criticality
+        $Type                : 'UI.DataField',
+        Value                : age,
+        Criticality          : criticality,
+        ![@HTML5.CssDefaults]: {width: '5rem'}
+
 
     },
     {
-        $Type: 'UI.DataField',
-        Value: lastdayCount,
+        $Type                : 'UI.DataField',
+        Value                : lastdayCount,
+        ![@HTML5.CssDefaults]: {width: '5rem'}
     },
+    {
+        $Type                : 'UI.DataField',
+        Value                : seg,
+        ![@HTML5.CssDefaults]: {width: '5rem'}
+    },
+    {
+        $Type                : 'UI.DataField',
+        Value                : ter,
+        ![@HTML5.CssDefaults]: {width: '5rem'}
+    },
+    {
+        $Type                : 'UI.DataField',
+        Value                : qua,
+        ![@HTML5.CssDefaults]: {width: '5rem'}
+    },
+    {
+        $Type                : 'UI.DataField',
+        Value                : qui,
+        ![@HTML5.CssDefaults]: {width: '5rem'}
+    },
+    {
+        $Type                : 'UI.DataField',
+        Value                : sex,
+        ![@HTML5.CssDefaults]: {width: '5rem'}
+    },
+    {
+        $Type                : 'UI.DataField',
+        Value                : sab,
+        ![@HTML5.CssDefaults]: {width: '5rem'}
+    },
+    {
+        $Type                : 'UI.DataField',
+        Value                : dom,
+        ![@HTML5.CssDefaults]: {width: '5rem'}
+    }
 
 ]);
 
@@ -94,6 +132,25 @@ annotate service.Users with @(
             }
         ],
     },
+    UI.FieldGroup #GeneratedGroup3: {
+        $Type: 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type: 'UI.DataField',
+                Value: email,
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: phone,
+            },
+            {
+                $Type                  : 'UI.DataFieldWithUrl',
+                Url                    : whatsapp,
+                Value                  : whatsapp,
+                ![@Common.FieldControl]: #ReadOnly
+            }
+        ],
+    },
     UI.Facets                     : [
         {
             $Type : 'UI.ReferenceFacet',
@@ -107,6 +164,12 @@ annotate service.Users with @(
             Label : 'Disponibilidade',
             Target: '@UI.FieldGroup#GeneratedGroup2'
         },
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID    : 'GeneratedFacet3',
+            Label : 'Contatos',
+            Target: '@UI.FieldGroup#GeneratedGroup3'
+        }
     ]
 
 );

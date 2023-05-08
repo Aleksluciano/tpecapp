@@ -3,12 +3,26 @@ const WeekEntity = "TPEService.Week";
 const { createReport, createSchedule } = require("./utils");
 
 module.exports = cds.service.impl(async function (srv) {
+  srv.before(["UPDATE", "CREATE"], "Week", (req) => {
+    const week = req.data;
+    if (week.name_code == 8 && !week.specialDay) {
+      throw new Error(
+        "Quando marcado fim de semana, deve ser informado o dia especial"
+      );
+    }
+  });
   srv.before(["UPDATE", "CREATE"], "Users", (req) => {
     const user = req.data;
     const age = _calculateAge(user.birth_date);
     user.age = age;
     user.criticality = _calculateCriticality(user.age);
     user.lastdayCount = _daysBetweenDates(user.lastime);
+    if (user.phone) {
+      const countryCode = "55";
+      const numericPhoneNumber = user.phone.replace(/\D/g, "");
+      const whatsappLink = `https://wa.me/${countryCode}${numericPhoneNumber}`;
+      user.whatsapp = whatsappLink;
+    }
   });
   function _calculateCriticality(age) {
     return age < 18 ? 2 : 0;

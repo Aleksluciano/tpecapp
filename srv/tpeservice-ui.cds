@@ -3,7 +3,7 @@ using {TPEService} from './tpeservice';
 annotate TPEService.Users with {
     name         @title: 'Nome';
     gender       @title: 'Sexo';
-    birth_date   @title: 'Data de Nascimento'  @UI.HiddenFilter;
+    birth_date   @title: 'Data de Nascimento';
     lastime      @title: 'Última designação(AAAAMMDD)';
     desativado   @title: 'Desativado';
     seg          @title: 'Seg';
@@ -14,7 +14,10 @@ annotate TPEService.Users with {
     sab          @title: 'Sab';
     dom          @title: 'Dom';
     age          @title: 'Idade';
-    lastdayCount @title: 'Dias sem designação';
+    lastdayCount @title: 'Últ. desig.';
+    email        @title: 'E-mail';
+    phone        @title: 'Telefone (XX) XXXXX-XXXX';
+    whatsapp     @title: 'Whatsapp';
 
 };
 
@@ -35,9 +38,10 @@ annotate TPEService.DaysOfWeek with {
 }
 
 annotate TPEService.Week with {
-    name   @title: 'Nome';
-    point  @title: 'Ponto';
-    period @title: 'Período';
+    name       @title: 'Nome';
+    point      @title: 'Ponto';
+    period     @title: 'Período';
+    specialDay @title: 'Dia especial';
 }
 
 annotate TPEService.Schedule with {
