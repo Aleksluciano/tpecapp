@@ -18,6 +18,7 @@ annotate TPEService.Users with {
     email        @title: 'E-mail';
     phone        @title: 'Telefone (XX) XXXXX-XXXX';
     whatsapp     @title: 'Whatsapp';
+    partner      @title: 'Companheiro fixo';
 
 };
 

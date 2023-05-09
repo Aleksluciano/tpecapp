@@ -29,7 +29,7 @@ annotate service.Periods with @(
     UI.Facets                     : [{
         $Type : 'UI.ReferenceFacet',
         ID    : 'GeneratedFacet1',
-        Label : 'General Information',
+        Label : 'Período',
         Target: '@UI.FieldGroup#GeneratedGroup1',
     }, ]
 );

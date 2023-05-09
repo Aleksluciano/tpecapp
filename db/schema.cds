@@ -20,9 +20,11 @@ entity UsersTable : managed {
         criticality  : Integer;
         age          : Integer;
         lastdayCount : Integer;
-        email        : String                  @assert.format: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$';
-        phone        : String                  @assert.format: '^(\([0-9]{2}\))\s([0-9]{4,5})-([0-9]{4})$';
+        email        : String                  @assert.format: '^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}|)$';
+        phone        : String                  @assert.format: '^((\([0-9]{2}\))\s([0-9]{4,5})-([0-9]{4})|)$';
         whatsapp     : String;
+        partner      : Association to UsersTable;
+        history_partner : String;
 
 };
 

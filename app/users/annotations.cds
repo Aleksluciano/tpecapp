@@ -95,6 +95,10 @@ annotate service.Users with @(
             },
             {
                 $Type: 'UI.DataField',
+                Value: partner_ID,
+            },
+            {
+                $Type: 'UI.DataField',
                 Value: desativado,
             }
         ],
@@ -175,8 +179,81 @@ annotate service.Users with @(
 );
 
 annotate service.Users with {
+    partner @(Common: {
+        Text           : partner.name,
+        TextArrangement: #TextOnly,
+        ValueList      : {
+            Label         : 'Usuário',
+            CollectionPath: 'Users',
+            Parameters    : [
+                {
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: partner_ID,
+                    ValueListProperty: 'ID',
+                },
+                {
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'name'
+                },
 
-    gender @(Common: {ValueList: {
+                {
+                    $Type                : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty    : 'age',
+                    ![@HTML5.CssDefaults]: {width: '5rem'}
+                },
+
+                {
+                    $Type                : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty    : 'lastdayCount',
+                    ![@HTML5.CssDefaults]: {width: '5rem'}
+                },
+
+                {
+                    $Type                : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty    : 'dom',
+                    ![@HTML5.CssDefaults]: {width: '5rem'}
+                },
+
+                {
+                    $Type                : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty    : 'seg',
+                    ![@HTML5.CssDefaults]: {width: '5rem'}
+                },
+
+                {
+                    $Type                : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty    : 'ter',
+                    ![@HTML5.CssDefaults]: {width: '5rem'}
+                },
+
+                {
+                    $Type                : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty    : 'qua',
+                    ![@HTML5.CssDefaults]: {width: '5rem'}
+                },
+
+                {
+                    $Type                : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty    : 'qui',
+                    ![@HTML5.CssDefaults]: {width: '5rem'}
+                },
+
+                {
+                    $Type                : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty    : 'sex',
+                    ![@HTML5.CssDefaults]: {width: '5rem'}
+                },
+
+                {
+                    $Type                : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty    : 'sab',
+                    ![@HTML5.CssDefaults]: {width: '5rem'}
+                }
+            ]
+        }
+    });
+
+    gender  @(Common: {ValueList: {
 
         Label         : 'Sexo',
         CollectionPath: 'Gender',

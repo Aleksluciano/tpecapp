@@ -61,7 +61,7 @@ annotate service.Report with @(
     UI.Facets                     : [{
         $Type : 'UI.ReferenceFacet',
         ID    : 'GeneratedFacet1',
-        Label : 'General Information',
+        Label : 'Relatório',
         Target: '@UI.FieldGroup#GeneratedGroup1',
     }, ]
 );

@@ -38,7 +38,7 @@ annotate service.Schedule with @(
     UI.Facets                     : [{
         $Type : 'UI.ReferenceFacet',
         ID    : 'GeneratedFacet1',
-        Label : 'General Information',
+        Label : 'Escala',
         Target: '@UI.FieldGroup#GeneratedGroup1',
     }, ]
 );

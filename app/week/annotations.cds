@@ -18,11 +18,11 @@ annotate service.Week with @(UI.LineItem: [
         Label: 'Período',
         Value: period_name,
     },
-            {
-                $Type: 'UI.DataField',
-                Label: 'Dia especial',
-                Value: specialDay,
-            }
+    {
+        $Type: 'UI.DataField',
+        Label: 'Dia especial',
+        Value: specialDay,
+    }
 ]);
 
 annotate service.Week with @(
@@ -55,7 +55,7 @@ annotate service.Week with @(
     UI.Facets                     : [{
         $Type : 'UI.ReferenceFacet',
         ID    : 'GeneratedFacet1',
-        Label : 'General Information',
+        Label : 'Semana',
         Target: '@UI.FieldGroup#GeneratedGroup1',
     }, ]
 );

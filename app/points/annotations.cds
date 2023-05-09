@@ -38,7 +38,7 @@ annotate service.Points with @(
     UI.Facets                     : [{
         $Type : 'UI.ReferenceFacet',
         ID    : 'GeneratedFacet1',
-        Label : 'General Information',
+        Label : 'Ponto',
         Target: '@UI.FieldGroup#GeneratedGroup1',
     }, ]
 );

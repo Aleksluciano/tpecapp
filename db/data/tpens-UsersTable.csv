@@ -1,11 +1,11 @@
-name;gender_code;birth_date;lastime;desativado;seg;ter;qua;qui;sex;sab;dom;criticality;age;lastdayCount;phone;whatsapp
-Alex Avelar;H;1983-04-22;2023-04-22;false;1;1;1;1;1;1;1;;25;17;(12) 99204-3663;https://wa.me/5512992043663
-Marcio Silva;H;1993-04-22;2023-04-22;false;1;1;1;1;1;1;1;;25;17;(12) 99204-3663;https://wa.me/5512992043663
-Pedro Souza;H;1973-04-22;2023-04-22;false;12;1;1;1;1;1;1;;25;17;;
-Alan Ribeiro;H;1963-04-22;2023-04-22;false;12;1;1;1;1;1;1;;25;17;;
-Roberto de Lima;H;2006-04-22;2023-04-22;false;1;1;1;1;1;1;1;;25;17;;
-Fernando Peres;H;1997-04-22;2023-04-22;false;1;1;1;1;1;1;1;;25;17;;
-Daniel Medeiros;H;1995-04-22;2023-04-22;false;1;1;1;1;1;1;1;;25;17;;
-Carlos Pereira;H;1986-04-22;2022-04-21;false;1;1;1;1;1;1;1;;25;17;;
-Mariana Ferraz;M;1999-04-22;2023-04-22;false;1;1;1;1;1;1;1;;25;17;;
-Juliana de Souza;M;1992-04-22;2022-04-22;false;1;1;1;1;1;1;1;;25;17;;
+name;gender_code;birth_date;lastime;desativado;seg;ter;qua;qui;sex;sab;dom;criticality;age;lastdayCount;phone;whatsapp;partner_ID
+Alex Avelar;H;1983-04-22;2023-04-22;false;1;1;1;1;1;1;1;;25;17;(12) 99204-3663;https://wa.me/5512992043663;
+Marcio Silva;H;1993-04-22;2023-04-22;false;1;1;1;1;1;1;1;;25;17;(12) 99204-3663;https://wa.me/5512992043663;
+Pedro Souza;H;1973-04-22;2023-04-22;false;12;1;1;1;1;1;1;;25;17;;;
+Alan Ribeiro;H;1963-04-22;2023-04-22;false;12;1;1;1;1;1;1;;25;17;;;
+Roberto de Lima;H;2006-04-22;2023-04-22;false;1;1;1;1;1;1;1;;25;17;;;
+Fernando Peres;H;1997-04-22;2023-04-22;false;1;1;1;1;1;1;1;;25;17;;;
+Daniel Medeiros;H;1995-04-22;2023-04-22;false;1;1;1;1;1;1;1;;25;17;;;
+Carlos Pereira;H;1986-04-22;2022-04-21;false;1;1;1;1;1;1;1;;25;17;;;
+Mariana Ferraz;M;1999-04-22;2023-04-22;false;1;1;1;1;1;1;1;;25;17;;;
+Juliana de Souza;M;1992-04-22;2022-04-22;false;1;1;1;1;1;1;1;;25;17;;;
