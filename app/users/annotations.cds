@@ -2,9 +2,16 @@ using TPEService as service from '../../srv/tpeservice';
 
 annotate service.Users with @(UI.LineItem: [
     {
+        $Type                : 'UI.DataField',
+        Value                : statusText,
+        Criticality          : status,
+        ![@HTML5.CssDefaults]: {width: '3rem'}
+    },
+    {
         $Type: 'UI.DataField',
         Value: name,
     },
+
     {
         $Type: 'UI.DataField',
         Value: gender_code,

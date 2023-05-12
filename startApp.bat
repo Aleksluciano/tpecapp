@@ -1,1 +1,1 @@
-cds watch
+cds serve

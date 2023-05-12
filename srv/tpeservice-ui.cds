@@ -19,6 +19,7 @@ annotate TPEService.Users with {
     phone        @title: 'Telefone (XX) XXXXX-XXXX';
     whatsapp     @title: 'Whatsapp';
     partner      @title: 'Companheiro fixo';
+    statusText   @title: 'St.';
 
 };
 
@@ -39,7 +40,7 @@ annotate TPEService.DaysOfWeek with {
 }
 
 annotate TPEService.Week with {
-    name       @title: 'Nome';
+    nameweek       @title: 'Nome';
     point      @title: 'Ponto';
     period     @title: 'Período';
     specialDay @title: 'Dia especial';

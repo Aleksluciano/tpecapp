@@ -40,9 +40,10 @@ annotate service.Report with @(
                 Value: day,
             },
             {
-                $Type: 'UI.DataField',
-                Label: 'Dia da Semana',
-                Value: dayweek_code,
+                $Type                  : 'UI.DataField',
+                Label                  : 'Dia da Semana',
+                Value                  : dayweek_code,
+                ![@Common.FieldControl]: #ReadOnly
             },
             {
                 $Type: 'UI.DataField',

@@ -23,11 +23,30 @@ module.exports = cds.service.impl(async function (srv) {
   });
 
   //USERS
+  /*   srv.after(["READ"], "Users", (data, req) => {
+    const users = req.results;
+    if (Array.isArray(users)) {
+      users.forEach((user) => {
+        user.status = _checkStatus(user);
+        if (user.status == 1) user.statusText = "";
+        else user.statusText = "";
+      });
+    } else {
+      users.status = _checkStatus(users);
+      if (users.status == 1) users.statusText = "";
+      else users.statusText = "";
+    }
+    //console.log("dataaa", req);
+  }); */
   srv.before(["UPDATE", "CREATE"], "Users", async (req) => {
     const user = req.data;
     if (user.partner_ID && user.partner_ID == user.ID) {
       throw new Error("Não é possível cadastrar o mesmo usuário como parceiro");
     }
+
+    user.status = _checkStatus(user);
+    if (user.status == 1) user.statusText = "";
+    else user.statusText = "";
 
     const age = _calculateAge(user.birth_date);
     user.age = age;
@@ -51,7 +70,6 @@ module.exports = cds.service.impl(async function (srv) {
   });
 
   //SCHEDULE
-  //
   srv.before(["UPDATE", "CREATE"], "Schedule", async (req) => {
     const schedule = req.data;
     await _checkIfDateBeginIsBeforeDateEnd(schedule);
@@ -59,7 +77,26 @@ module.exports = cds.service.impl(async function (srv) {
     await _checkIfDateAlreadyExists(schedule, req);
   });
 
+  //REPORT
+  srv.before(["UPDATE", "CREATE"], "Report", async (req) => {
+    const report = req.data;
+    console.log(report);
+    await _assignDayOfWeekCode(report, req);
+  });
+
   //HELP FUNCTIONS
+  async function _assignDayOfWeekCode(report, req) {
+    const existInWeek = await cds
+      .transaction(req)
+      .run(SELECT.from(WeekEntity).where({ specialDay: report.day }));
+    if (existInWeek && existInWeek.length > 0) {
+      report.dayweek_code = existInWeek[0].name_code;
+    } else {
+      const date = new Date(`${report.day}T00:00:00Z`);
+      report.dayweek_code = date.getUTCDay();
+    }
+  }
+
   async function _checkIfPointExistInWeek(pointID, req) {
     const existInWeek = await cds
       .transaction(req)
@@ -200,6 +237,22 @@ module.exports = cds.service.impl(async function (srv) {
   }
   function _calculateCriticality(age) {
     return age < 18 ? 2 : 0;
+  }
+
+  function _checkStatus(user) {
+    console.log("desativado", user.desativado);
+    if (user.desativado == true) return 1;
+    if (
+      user.seg == "" &&
+      user.ter == "" &&
+      user.qua == "" &&
+      user.qui == "" &&
+      user.sex == "" &&
+      user.sab == "" &&
+      user.dom == ""
+    )
+      return 1;
+    return 3;
   }
 
   function _calculateAge(birthDate) {

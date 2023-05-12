@@ -1,12 +1,10 @@
 using TPEService as service from '../../srv/tpeservice';
 
 annotate service.Week with @(UI.LineItem: [
-
-
     {
         $Type: 'UI.DataField',
         Label: 'Dia da Semana',
-        Value: name_code,
+        Value: nameweek_code,
     },
     {
         $Type: 'UI.DataField',
@@ -32,7 +30,7 @@ annotate service.Week with @(
             {
                 $Type: 'UI.DataField',
                 Label: 'Dia da Semana',
-                Value: name_code,
+                Value: nameweek_code,
             },
             {
                 $Type: 'UI.DataField',
@@ -62,8 +60,8 @@ annotate service.Week with @(
 
 annotate service.Week with {
 
-    name   @(Common: {
-        Text           : name.day,
+    nameweek @(Common: {
+        Text           : nameweek.day,
         TextArrangement: #TextOnly,
         ValueList      : {
             Label         : 'Days of the Week',
@@ -72,7 +70,7 @@ annotate service.Week with {
             Parameters    : [
                 {
                     $Type            : 'Common.ValueListParameterInOut',
-                    LocalDataProperty: name_code,
+                    LocalDataProperty: nameweek_code,
                     ValueListProperty: 'code'
                 },
                 {
@@ -84,7 +82,7 @@ annotate service.Week with {
         }
     });
 
-    point  @(Common: {
+    point    @(Common: {
         //show text, not id for mitigation in the context of risks
         Text           : point.name,
         TextArrangement: #TextOnly,
@@ -109,7 +107,7 @@ annotate service.Week with {
         }
     });
 
-    period @(Common: {
+    period   @(Common: {
         //show text, not id for mitigation in the context of risks
         Text           : period.descr,
         TextArrangement: #TextOnly,
