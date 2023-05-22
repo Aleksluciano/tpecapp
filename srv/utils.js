@@ -42,13 +42,13 @@ const createSchedule = (schedule) => {
 };
 
 const createReport = (rangeDate, weeks, points) => {
-  console.log("RANGE DATE", rangeDate);
+  //console.log("RANGE DATE", rangeDate);
   const designations = [];
   for (const idate of rangeDate) {
     const specialDayweeks = weeks.filter((day) => day.specialDay == idate.day);
     if (specialDayweeks.length > 0) {
       specialDayweeks.forEach((day) => {
-        console.log("DAY", day);
+        //console.log("DAY", day);
         if (day) {
           const point = points.find((point) => point.ID == day.point_ID);
           //console.log("PONTO1", point)
@@ -73,7 +73,7 @@ const createReport = (rangeDate, weeks, points) => {
       weeks
         .filter((day) => day.nameweek_code == idate.codeDayWeek)
         .forEach((day) => {
-          console.log("DAY", day);
+          //console.log("DAY", day);
           if (day) {
             const point = points.find((point) => point.ID == day.point_ID);
             //console.log("PONTO1", point)
@@ -115,8 +115,7 @@ const findAnyUser = (users, desig, designations) => {
     user = users.find(
       (u) =>
         ((u[dispodayweek[6]] && u[dispodayweek[6]].includes(desig.period)) ||
-          (u[dispodayweek[0]] &&
-            u[dispodayweek[0]].includes(desig.period))) &&
+          (u[dispodayweek[0]] && u[dispodayweek[0]].includes(desig.period))) &&
         notDesignedYet(u, desig, designations)
     );
   } else {
@@ -137,8 +136,7 @@ const findUserByGender = (users, desig, designations, gender_code) => {
         !u.partner_ID &&
         u.gender_code == gender_code &&
         ((u[dispodayweek[6]] && u[dispodayweek[6]].includes(desig.period)) ||
-          (u[dispodayweek[0]] &&
-            u[dispodayweek[0]].includes(desig.period))) &&
+          (u[dispodayweek[0]] && u[dispodayweek[0]].includes(desig.period))) &&
         notDesignedYet(u, desig, designations)
     );
   } else {
@@ -160,8 +158,7 @@ const findUserWithPartner = (users, partner_ID) => {
 
 const notDesignedYet = (u, desig, designations) =>
   !designations.find(
-    (ud) =>
-      ud.user == u.ID && ud.day == desig.day && ud.period == desig.period
+    (ud) => ud.user == u.ID && ud.day == desig.day && ud.period == desig.period
   );
 
 const removeScheduleIncomplete = (designations) => {

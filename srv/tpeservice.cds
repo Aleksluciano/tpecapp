@@ -28,7 +28,7 @@ service TPEService {
     annotate Schedule with @odata.draft.enabled;
 
     entity Report     as projection on my.ReportTable order by
-        day asc;
+        day desc;
 
     annotate Report with @odata.draft.enabled;
     entity Gender     as projection on my.GenTable;

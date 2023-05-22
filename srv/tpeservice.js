@@ -70,6 +70,18 @@ module.exports = cds.service.impl(async function (srv) {
     const report = req.data;
     console.log(report);
     await _assignDayOfWeekCode(report, req);
+    await cds
+      .run(SELECT.from(UsersEntity).where({ ID: req.data.user_ID }))
+      .then((_) => {
+        cds.run(
+          UPDATE(UsersEntity)
+            .set({
+              lastime: report.day,
+              lastdayCount: _daysBetweenDates(report.day),
+            })
+            .where({ ID: report.user_ID })
+        );
+      });
   });
 
   srv.after(["READ"], "Report", async (req) => {
@@ -81,8 +93,8 @@ module.exports = cds.service.impl(async function (srv) {
         const dateA = new Date(a.day);
         const dateB = new Date(b.day);
 
-        if (dateA < dateB) return -1;
-        if (dateA > dateB) return 1;
+        if (dateA < dateB) return 1;
+        if (dateA > dateB) return -1;
 
         // If day is the same, sort by point.name
         if (a.point.name < b.point.name) return -1;
@@ -103,6 +115,27 @@ module.exports = cds.service.impl(async function (srv) {
     await _checkIfDateBeginIsBeforeDateEnd(schedule);
     await _checkIfNameAlreadyExists(schedule, req);
     await _checkIfDateAlreadyExists(schedule, req);
+  });
+
+  srv.after(["DELETE"], "Schedule", async (data, req) => {
+    const schedule = req.data;
+    console.log("schedule", schedule);
+    await cds
+      .run(SELECT.from(ReportEntity).where({ schedule_name: schedule.name }))
+      .then((reports) => {
+        for (const rep of reports) {
+          rep.day = "2022" + rep.day.substring(4);
+          cds.run(
+            UPDATE(UsersEntity)
+              .set({
+                lastime: rep.day,
+                lastdayCount: _daysBetweenDates(rep.day),
+              })
+              .where({ ID: rep.user_ID })
+          );
+        }
+      });
+    await DELETE.from(ReportEntity).where({ schedule_name: schedule.name });
   });
 
   srv.after(["CREATE"], "Schedule", async (req) => {
@@ -210,7 +243,7 @@ module.exports = cds.service.impl(async function (srv) {
     }
 
     const designationsCompleted = removeScheduleIncomplete([...designations]);
-    console.log("DESIGNATIONS", designationsCompleted);
+    //console.log("DESIGNATIONS", designationsCompleted);
     let reports = [];
     for (const desig of designationsCompleted) {
       reports.push({
@@ -223,7 +256,17 @@ module.exports = cds.service.impl(async function (srv) {
       });
     }
 
-    await cds.run(INSERT.into(ReportEntity).entries(reports));
+    await cds.run(INSERT.into(ReportEntity).entries(reports)).then((_) => {
+      console.log("inicio");
+      for (const rep of reports) {
+        console.log("rep", rep);
+        cds.run(
+          UPDATE(UsersEntity)
+            .set({ lastime: rep.day, lastdayCount: _daysBetweenDates(rep.day) })
+            .where({ ID: rep.user_ID })
+        );
+      }
+    });
   }); //method
 
   //                 });
@@ -385,7 +428,7 @@ module.exports = cds.service.impl(async function (srv) {
   }
 
   function _checkStatus(user) {
-    console.log("desativado", user.desativado);
+    // console.log("desativado", user.desativado);
     if (user.desativado == true) return 1;
     if (
       user.seg == "" &&
@@ -415,7 +458,8 @@ module.exports = cds.service.impl(async function (srv) {
     const currentDate = new Date();
 
     // Calculate the difference in milliseconds
-    const diffMilliseconds = Math.abs(currentDate - date);
+    //const diffMilliseconds = Math.abs(currentDate - date);
+    const diffMilliseconds = currentDate - date;
 
     // Convert milliseconds to days
     const days = Math.floor(diffMilliseconds / (1000 * 60 * 60 * 24));
