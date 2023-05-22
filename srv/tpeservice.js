@@ -58,6 +58,13 @@ module.exports = cds.service.impl(async function (srv) {
   });
 
   //REPORT
+
+  srv.before(["UPDATE", "CREATE"], "Report", async (req) => {
+    const report = req.data;
+    console.log(report);
+    await _assignDayOfWeekCode(report, req);
+  });
+
   srv.after(["READ"], "Report", async (req) => {
     const data = req;
     console.log(data);
@@ -95,7 +102,6 @@ module.exports = cds.service.impl(async function (srv) {
     const schedule = req;
     const weeks = await cds.run(SELECT.from(WeekEntity));
     const points = await cds.run(SELECT.from(PointsEntity));
-    const periods = await cds.run(SELECT.from(PeriodsEntity));
     const usersAll = await cds.run(SELECT.from(UsersEntity));
 
     //console.log(schedule, weeks, points, periods, usersAll);
@@ -117,7 +123,7 @@ module.exports = cds.service.impl(async function (srv) {
 
       const firtAssignDatePeriod =
         date !== desig.day || period !== desig.period;
-      const sameDate = date == desig.day;
+      const sameDate = date == desig.day && period == desig.period;
 
       if (!sameDate) {
         // console.log("ordenação", users);
@@ -126,8 +132,6 @@ module.exports = cds.service.impl(async function (srv) {
           let dateA = new Date(a.lastime);
           let dateB = new Date(b.lastime);
 
-          // Return 1 if dateA is less than dateB, -1 if dateA is greater than dateB, or 0 if they're equal.
-          // The inversion is achieved by swapping the places of dateA and dateB in the comparison.
           return dateA < dateB ? -1 : dateA > dateB ? 1 : 0;
         });
         // console.log("ordenação", users);
@@ -149,11 +153,7 @@ module.exports = cds.service.impl(async function (srv) {
         if (userFirstPatner) {
           let userFound = null;
           if (userFirstPatner.partner_ID) {
-            userFound = findUserWithPartner(
-              users,
-              desig,
-              userFirstPatner.partner_ID
-            );
+            userFound = findUserWithPartner(users, userFirstPatner.partner_ID);
           }
           if (!userFirstPatner.partner_ID) {
             userFound = findUserByGender(
@@ -178,19 +178,12 @@ module.exports = cds.service.impl(async function (srv) {
               const userReset = usersAll.find((u) => u.ID == desigback.user);
               if (userReset) {
                 const userRemoved = users.find((u) => u.ID == desigback.user);
-                console.log(
-                  "RESET DATA USER",
-                  userRemoved.lastime,
-                  userReset.lastime
-                );
                 userRemoved.lastime = userReset.lastime;
               }
             }
-            console.log("DESIGNBACK", desigback);
 
             const userFoundBack = findAnyUser(users, desig, designations);
 
-            console.log("userFoundBack", userFoundBack);
             userFirstPatner = userFoundBack;
             if (userFoundBack) {
               i++;
@@ -312,13 +305,6 @@ module.exports = cds.service.impl(async function (srv) {
   };
 
   //                 });
-
-  //REPORT
-  srv.before(["UPDATE", "CREATE"], "Report", async (req) => {
-    const report = req.data;
-    console.log(report);
-    await _assignDayOfWeekCode(report, req);
-  });
 
   //HELP FUNCTIONS
   async function _assignDayOfWeekCode(report, req) {
