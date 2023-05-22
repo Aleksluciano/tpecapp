@@ -1,8 +1,7 @@
 const checkGender = (user, gender) => user.gender_code == gender;
 const selectUsersByGender = (users, gender) =>
   users.slice().filter((user) => areMen(user, gender));
-const sortByLastime = (users) =>
-  users.slice().sort((a, b) => a.lastime - b.lastime);
+const sortByLastime = (users) => users.sort((a, b) => a.lastime - b.lastime);
 
 const createSchedule = (schedule) => {
   const beginDate = new Date(`${schedule.begin}T00:00:00Z`);
@@ -43,13 +42,13 @@ const createSchedule = (schedule) => {
 };
 
 const createReport = (rangeDate, weeks, points) => {
-  // console.log("RANGE DATE", rangeDate);
+  console.log("RANGE DATE", rangeDate);
   const designations = [];
   for (const idate of rangeDate) {
-    weeks
-      .filter((day) => day.name_code == idate.codeDayWeek)
-      .forEach((day) => {
-        //console.log("DAY", day)
+    const specialDayweeks = weeks.filter((day) => day.specialDay == idate.day);
+    if (specialDayweeks.length > 0) {
+      specialDayweeks.forEach((day) => {
+        console.log("DAY", day);
         if (day) {
           const point = points.find((point) => point.ID == day.point_ID);
           //console.log("PONTO1", point)
@@ -59,7 +58,7 @@ const createReport = (rangeDate, weeks, points) => {
               designations.push({
                 schedule: idate.schedule,
                 day: idate.day,
-                dayWeek: idate.codeDayWeek,
+                dayWeek: day.nameweek_code,
                 point: day.point_ID,
                 period: day.period_name,
                 user: "",
@@ -70,6 +69,32 @@ const createReport = (rangeDate, weeks, points) => {
           }
         }
       });
+    } else {
+      weeks
+        .filter((day) => day.nameweek_code == idate.codeDayWeek)
+        .forEach((day) => {
+          console.log("DAY", day);
+          if (day) {
+            const point = points.find((point) => point.ID == day.point_ID);
+            //console.log("PONTO1", point)
+            if (point) {
+              for (let i = 0; i < point.capacity; i++) {
+                //console.log("PONTO2", point)
+                designations.push({
+                  schedule: idate.schedule,
+                  day: idate.day,
+                  dayWeek: idate.codeDayWeek,
+                  point: day.point_ID,
+                  period: day.period_name,
+                  user: "",
+                  userName: "",
+                  userGender: "",
+                });
+              }
+            }
+          }
+        });
+    }
   }
   return designations;
 };

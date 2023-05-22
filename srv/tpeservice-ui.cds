@@ -40,7 +40,7 @@ annotate TPEService.DaysOfWeek with {
 }
 
 annotate TPEService.Week with {
-    nameweek       @title: 'Nome';
+    nameweek   @title: 'Nome';
     point      @title: 'Ponto';
     period     @title: 'Período';
     specialDay @title: 'Dia especial';
@@ -59,7 +59,7 @@ annotate TPEService.Report with {
     dayweek  @title: 'Dia semana';
     point    @title: 'Ponto';
     period   @title: 'Período';
-    user     @title: 'Usuário';
+    user     @title: 'Publicador';
 
 }
 

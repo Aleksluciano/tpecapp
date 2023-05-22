@@ -77,3 +77,4 @@ entity ReportTable : managed {
         period   : Association to PeriodsTable;
         user     : Association to UsersTable;
 }
+

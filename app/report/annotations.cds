@@ -2,28 +2,37 @@ using TPEService as service from '../../srv/tpeservice';
 
 annotate service.Report with @(UI.LineItem: [
     {
-        $Type: 'UI.DataField',
-        Value: schedule_name,
+        $Type                : 'UI.DataField',
+        Value                : schedule_name,
+        ![@HTML5.CssDefaults]: {width: '10rem'}
     },
     {
-        $Type: 'UI.DataField',
-        Value: day,
+        $Type                : 'UI.DataField',
+        Value                : day,
+        ![@HTML5.CssDefaults]: {width: '10rem'}
     },
     {
-        $Type: 'UI.DataField',
-        Value: dayweek_code,
+        $Type                : 'UI.DataField',
+        Value                : dayweek_code,
+        ![@HTML5.CssDefaults]: {width: '10rem'}
     },
     {
-        $Type: 'UI.DataField',
-        Value: point_ID,
+        $Type                : 'UI.DataField',
+        Value                : point_ID,
+        ![@HTML5.CssDefaults]: {width: '10rem'}
     },
     {
-        $Type: 'UI.DataField',
-        Value: period_name,
+        $Type                : 'UI.DataField',
+        Value                : period_name,
+        ![@HTML5.CssDefaults]: {width: '5rem'}
     },
     {
         $Type: 'UI.DataField',
         Value: user_ID,
+    },
+    {
+        $Type: 'UI.DataField',
+        Value: user.gender_code,
     }
 ]);
 
