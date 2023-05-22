@@ -2,11 +2,14 @@ const cds = require("@sap/cds/lib");
 const { GET, expect } = cds.test(__dirname + "/../");
 
 const {
-  selectUsersByGender,
-  sortByLastime,
-  checkGender,
+  createReport,
+  createSchedule,
+  findAnyUser,
+  findUserByGender,
+  findUserWithPartner,
+  removeScheduleIncomplete,
 } = require("../srv/utils");
-const { createSchedule, createReport } = require("../srv/utils");
+
 const user = require("@sap/cds/lib/req/user");
 
 describe("TPEService", () => {
@@ -196,7 +199,7 @@ describe("TPEService", () => {
   }); //method
 }); //Service
 
-const dispodayweek = {
+/* const dispodayweek = {
   0: "dom",
   1: "seg",
   2: "ter",
@@ -276,7 +279,7 @@ const removeScheduleIncomplete = (designations) => {
   }
 
   return designations;
-};
+}; */
 
 const USERSfake = [
   {

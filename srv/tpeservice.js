@@ -5,7 +5,14 @@ const ScheduleEntity = "TPEService.Schedule";
 const PointsEntity = "TPEService.Points";
 const PeriodsEntity = "TPEService.Periods";
 const ReportEntity = "TPEService.Report";
-const { createReport, createSchedule } = require("./utils");
+const {
+  createReport,
+  createSchedule,
+  findAnyUser,
+  findUserByGender,
+  findUserWithPartner,
+  removeScheduleIncomplete,
+} = require("./utils");
 
 //WEEK
 module.exports = cds.service.impl(async function (srv) {
@@ -218,91 +225,6 @@ module.exports = cds.service.impl(async function (srv) {
 
     await cds.run(INSERT.into(ReportEntity).entries(reports));
   }); //method
-
-  const dispodayweek = {
-    0: "dom",
-    1: "seg",
-    2: "ter",
-    3: "qua",
-    4: "qui",
-    5: "sex",
-    6: "sab",
-  };
-
-  const findAnyUser = (users, desig, designations) => {
-    let user = null;
-    if (desig.dayWeek == 8) {
-      user = users.find(
-        (u) =>
-          ((u[dispodayweek[6]] && u[dispodayweek[6]].includes(desig.period)) ||
-            (u[dispodayweek[0]] &&
-              u[dispodayweek[0]].includes(desig.period))) &&
-          notDesignedYet(u, desig, designations)
-      );
-    } else {
-      user = users.find(
-        (u) =>
-          u[dispodayweek[desig.dayWeek]] &&
-          u[dispodayweek[desig.dayWeek]].includes(desig.period) &&
-          notDesignedYet(u, desig, designations)
-      );
-    }
-    return user;
-  };
-  const findUserByGender = (users, desig, designations, gender_code) => {
-    let user = null;
-    if (desig.dayWeek == 8) {
-      user = users.find(
-        (u) =>
-          !u.partner_ID &&
-          u.gender_code == gender_code &&
-          ((u[dispodayweek[6]] && u[dispodayweek[6]].includes(desig.period)) ||
-            (u[dispodayweek[0]] &&
-              u[dispodayweek[0]].includes(desig.period))) &&
-          notDesignedYet(u, desig, designations)
-      );
-    } else {
-      user = users.find(
-        (u) =>
-          !u.partner_ID &&
-          u.gender_code == gender_code &&
-          u[dispodayweek[desig.dayWeek]] &&
-          u[dispodayweek[desig.dayWeek]].includes(desig.period) &&
-          notDesignedYet(u, desig, designations)
-      );
-    }
-    return user;
-  };
-  const findUserWithPartner = (users, partner_ID) => {
-    const user = users.find((u) => u.ID == partner_ID);
-    return user;
-  };
-
-  const notDesignedYet = (u, desig, designations) =>
-    !designations.find(
-      (ud) =>
-        ud.user == u.ID && ud.day == desig.day && ud.period == desig.period
-    );
-
-  const removeScheduleIncomplete = (designations) => {
-    const emptySchedule = designations.filter((d) => d.user == "");
-
-    for (let i = 0; i < designations.length; i++) {
-      if (
-        emptySchedule.find(
-          (d) =>
-            d.day == designations[i].day &&
-            d.period == designations[i].period &&
-            d.point == designations[i].point
-        )
-      ) {
-        designations.splice(i, 1);
-        i--;
-      }
-    }
-
-    return designations;
-  };
 
   //                 });
 
