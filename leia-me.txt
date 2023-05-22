@@ -1,0 +1,10 @@
+Primeira vez Clicar em:
+A-instalar
+B-resetDB
+Z-ligar(deixar aberto ou minimizado)
+
+Colocar o link no navegador:
+http://localhost:4004/launchpage.html
+
+Todas as outras vezes basta clicar apenas em Z-ligar e deixar aberto ou minimizado.
+Ao fechar a janela de Z-ligar o servidor para

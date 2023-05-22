@@ -1,0 +1,1 @@
+cds deploy --to sqlite:my.db
