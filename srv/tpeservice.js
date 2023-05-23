@@ -6,6 +6,7 @@ const PointsEntity = "TPEService.Points";
 const PeriodsEntity = "TPEService.Periods";
 const ReportEntity = "TPEService.Report";
 const {
+  shuffle,
   createReport,
   createSchedule,
   findAnyUser,
@@ -167,6 +168,7 @@ module.exports = cds.service.impl(async function (srv) {
 
       if (!sameDate) {
         // console.log("ordenação", users);
+        users = shuffle(users);
         users.sort((a, b) => {
           // Convert string to date object for comparison.
           let dateA = new Date(a.lastime);

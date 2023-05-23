@@ -1,7 +1,7 @@
 using {TPEService} from './tpeservice';
 
 annotate TPEService.Users with {
-    name         @title: 'Nome';
+    name         @title: 'Publicador';
     gender       @title: 'Sexo';
     birth_date   @title: 'Data de Nascimento';
     lastime      @title: 'Última designação(AAAAMMDD)';
@@ -24,13 +24,13 @@ annotate TPEService.Users with {
 };
 
 annotate TPEService.Points with {
-    name     @title: 'Nome';
+    name     @title: 'Ponto';
     capacity @title: 'Capacidade';
     descr    @title: 'Descrição';
 }
 
 annotate TPEService.Periods with {
-    name  @title: 'Nome';
+    name  @title: 'Perído';
     descr @title: 'Descrição';
 }
 
@@ -40,21 +40,21 @@ annotate TPEService.DaysOfWeek with {
 }
 
 annotate TPEService.Week with {
-    nameweek   @title: 'Nome';
+    nameweek   @title: 'Dia Semana';
     point      @title: 'Ponto';
     period     @title: 'Período';
     specialDay @title: 'Dia especial';
 }
 
 annotate TPEService.Schedule with {
-    name  @title: 'Nome';
+    name  @title: 'Escala E';
     begin @title: 'Início';
     end   @title: 'Fim';
 
 }
 
 annotate TPEService.Report with {
-    schedule @title: 'Nome';
+    schedule @title: 'Escala R';
     day      @title: 'Dia';
     dayweek  @title: 'Dia semana';
     point    @title: 'Ponto';
