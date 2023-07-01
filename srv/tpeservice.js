@@ -21,6 +21,28 @@ module.exports = cds.service.impl(async function (srv) {
     const week = req.data;
     _checkIfDateForWeekendCodeIsFilled(week);
   });
+
+  // srv.after(["READ"], "Week", (req, each) => {
+  //   const data = req;
+  //   //("aqui1", each.data);
+  //   if (Array.isArray(data))
+  //     data.sort(function (a, b) {
+  //       // console.log(a);
+  //       if (a.nameweek.code < b.nameweek.code) return 1;
+  //       if (a.nameweek.code > b.nameweek.code) return -1;
+
+  //       // If day is the same, sort by point.name
+  //       if (a.point.name < b.point.name) return -1;
+  //       if (a.point.name > b.point.name) return 1;
+
+  //       // If point.name is the same, sort by period.name
+  //       if (a.period.name < b.period.name) return -1;
+  //       if (a.period.name > b.period.name) return 1;
+
+  //       // If all fields are the same, return 0
+  //       return 0;
+  //     });
+  // });
   //PERIODS
   srv.before(["DELETE"], "Periods", async (req) => {
     const period = req.data;
@@ -69,7 +91,19 @@ module.exports = cds.service.impl(async function (srv) {
 
   srv.before(["UPDATE", "CREATE"], "Report", async (req) => {
     const report = req.data;
-    console.log(report);
+    if (!report.schedule_begin && !report.schedule_end) {
+      await cds
+        .run(
+          SELECT.from(ScheduleEntity).where({
+            name: report.schedule_name,
+          })
+        )
+        .then((schedule) => {
+          req.data.schedule_begin = schedule[0].begin;
+          req.data.schedule_end = schedule[0].end;
+        });
+    }
+
     await _assignDayOfWeekCode(report, req);
     await cds
       .run(SELECT.from(UsersEntity).where({ ID: req.data.user_ID }))
@@ -85,30 +119,38 @@ module.exports = cds.service.impl(async function (srv) {
       });
   });
 
-  srv.after(["READ"], "Report", async (req) => {
-    const data = req;
-    console.log(data);
-    if (Array.isArray(data))
-      data.sort(function (a, b) {
-        // Sort by day
-        const dateA = new Date(a.day);
-        const dateB = new Date(b.day);
+  // srv.after(["READ"], "Report", async (req) => {
+  //   let data = req;
 
-        if (dateA < dateB) return 1;
-        if (dateA > dateB) return -1;
+  //   if (Array.isArray(data)) {
+  //     data.sort(function (a, b) {
+  //       // Sort by day
+  //       const dateA = new Date(a.day);
+  //       const dateB = new Date(b.day);
 
-        // If day is the same, sort by point.name
-        if (a.point.name < b.point.name) return -1;
-        if (a.point.name > b.point.name) return 1;
+  //       if (dateA < dateB) return 1;
+  //       if (dateA > dateB) return -1;
+  //       if (
+  //         a.point.name.toLowerCase().trim() < b.point.name.toLowerCase().trim()
+  //       )
+  //         return 1;
+  //       if (
+  //         a.point.name.toLowerCase().trim() > b.point.name.toLowerCase().trim()
+  //       )
+  //         return -1;
+  //       console.log(a.point.name.toLowerCase(), b.point.name.toLowerCase());
+  //       if (a.period.name < b.period.name) return 1;
+  //       if (a.period.name > b.period.name) return -1;
+  //       console.log(a.period.name, b.period.name);
+  //       return 0;
+  //     });
+  //   }
+  //   //if (dateA.getTime() == dateB.getTime()) return 0;
 
-        // If point.name is the same, sort by period.name
-        if (a.period.name < b.period.name) return -1;
-        if (a.period.name > b.period.name) return 1;
+  //   // If day is the same, sort by point.name
 
-        // If all fields are the same, return 0
-        return 0;
-      });
-  });
+  //   // console.log("final", data);
+  // });
 
   //SCHEDULE
   srv.before(["CREATE"], "Schedule", async (req) => {
@@ -120,7 +162,7 @@ module.exports = cds.service.impl(async function (srv) {
 
   srv.after(["DELETE"], "Schedule", async (data, req) => {
     const schedule = req.data;
-    console.log("schedule", schedule);
+
     await cds
       .run(SELECT.from(ReportEntity).where({ schedule_name: schedule.name }))
       .then((reports) => {
@@ -250,6 +292,8 @@ module.exports = cds.service.impl(async function (srv) {
     for (const desig of designationsCompleted) {
       reports.push({
         schedule_name: desig.schedule,
+        schedule_begin: schedule.begin,
+        schedule_end: schedule.end,
         day: desig.day,
         dayweek_code: desig.dayWeek,
         point_ID: desig.point,
@@ -259,9 +303,9 @@ module.exports = cds.service.impl(async function (srv) {
     }
 
     await cds.run(INSERT.into(ReportEntity).entries(reports)).then((_) => {
-      console.log("inicio");
+      //console.log("inicio");
       for (const rep of reports) {
-        console.log("rep", rep);
+        // console.log("rep", rep);
         cds.run(
           UPDATE(UsersEntity)
             .set({ lastime: rep.day, lastdayCount: _daysBetweenDates(rep.day) })

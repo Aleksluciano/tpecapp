@@ -2,8 +2,25 @@ using TPEService as service from '../../srv/tpeservice';
 
 
 annotate service.Report with @(UI: {
-    SelectionFields: [day],
-    LineItem       : [
+    SelectionFields    : [day],
+    PresentationVariant: {
+        SortOrder     : [ //Default sort order
+            {
+                Property  : day,
+                Descending: true,
+            },
+            {
+                Property  : point_ID,
+                Descending: false,
+            },
+            {
+                Property  : period_name,
+                Descending: false,
+            }
+        ],
+        Visualizations: ['@UI.LineItem'],
+    },
+    LineItem           : [
         {
             $Type                : 'UI.DataField',
             Value                : schedule_name,

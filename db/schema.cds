@@ -2,7 +2,6 @@ namespace tpens;
 
 using {managed} from '@sap/cds/common';
 
-
 entity UsersTable : managed {
     key ID              : UUID                    @(Core.Computed: true);
         name            : String not null         @mandatory;
@@ -27,20 +26,23 @@ entity UsersTable : managed {
         history_partner : String;
         status          : Integer;
         statusText      : String;
+        par             : Boolean;
+        impar           : Boolean;
+        lastPartner     : Association to UsersTable;
 
 };
 
 entity PointsTable : managed {
-    key ID       : UUID @(Core.Computed: true);
-        name     : String not null;
-        capacity : Integer not null;
-        descr    : String not null;
+    key ID       : UUID             @(Core.Computed: true);
+        name     : String not null  @mandatory;
+        capacity : Integer not null @mandatory;
+        descr    : String not null  @mandatory;
 
 }
 
 entity PeriodsTable : managed {
-    key name  : String(1) not null;
-        descr : String not null;
+    key name  : String(1) not null @mandatory;
+        descr : String not null    @mandatory;
 }
 
 entity WeekTable : managed {
@@ -62,19 +64,18 @@ entity GenTable : managed {
 }
 
 entity ScheduleTable : managed {
-    key name  : String;
-    key begin : Date not null;
-    key end   : Date not null;
+    key name  : String not null @mandatory;
+    key begin : Date            @mandatory default '';
+    key end   : Date            @mandatory default '';
 }
 
 
 entity ReportTable : managed {
-    key ID       : UUID @(Core.Computed: true);
-        schedule : Association to ScheduleTable;
-        day      : Date not null;
+    key ID       : UUID                         @(Core.Computed: true);
+        schedule : Association to ScheduleTable @mandatory;
+        day      : Date not null                @mandatory;
         dayweek  : Association to DaysOfWeekTable;
-        point    : Association to PointsTable;
-        period   : Association to PeriodsTable;
-        user     : Association to UsersTable;
+        point    : Association to PointsTable   @mandatory;
+        period   : Association to PeriodsTable  @mandatory;
+        user     : Association to UsersTable    @mandatory;
 }
-

@@ -20,7 +20,9 @@ annotate TPEService.Users with {
     whatsapp     @title: 'Whatsapp';
     partner      @title: 'Companheiro fixo';
     statusText   @title: 'St.';
-
+    par          @title: 'Pares';
+    impar        @title: 'Ímpares';
+    lastPartner  @title: 'Últ. companheiro.';
 };
 
 annotate TPEService.Points with {

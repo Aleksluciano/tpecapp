@@ -1,6 +1,10 @@
 using {tpens as my} from '../db/schema';
 
-@path: 'service/tpe'
+@path           : 'service/tpe'
+@cds.query.limit: {
+    default: 300,
+    max    : 300
+}
 service TPEService {
 
     entity Users      as projection on my.UsersTable order by
@@ -26,10 +30,7 @@ service TPEService {
         begin asc;
 
     annotate Schedule with @odata.draft.enabled;
-
-    entity Report     as projection on my.ReportTable order by
-        day desc;
-
+    entity Report     as projection on my.ReportTable;
     annotate Report with @odata.draft.enabled;
     entity Gender     as projection on my.GenTable;
     annotate Gender with @odata.draft.enabled;

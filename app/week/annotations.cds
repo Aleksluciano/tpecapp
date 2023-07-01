@@ -1,27 +1,46 @@
 using TPEService as service from '../../srv/tpeservice';
 
-annotate service.Week with @(UI.LineItem: [
-    {
-        $Type: 'UI.DataField',
-        Label: 'Dia da Semana',
-        Value: nameweek_code,
+annotate service.Week @(UI: {
+    PresentationVariant: {
+        SortOrder     : [ //Default sort order
+            {
+                Property  : nameweek_code,
+                Descending: true,
+            },
+            {
+                Property  : point_ID,
+                Descending: false,
+            },
+            {
+                Property  : period_name,
+                Descending: false,
+            }
+        ],
+        Visualizations: ['@UI.LineItem'],
     },
-    {
-        $Type: 'UI.DataField',
-        Label: 'Ponto',
-        Value: point_ID,
-    },
-    {
-        $Type: 'UI.DataField',
-        Label: 'Período',
-        Value: period_name,
-    },
-    {
-        $Type: 'UI.DataField',
-        Label: 'Dia especial',
-        Value: specialDay,
-    }
-]);
+    LineItem           : [
+        {
+            $Type: 'UI.DataField',
+            Label: 'Dia da Semana',
+            Value: nameweek_code,
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'Ponto',
+            Value: point_ID,
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'Período',
+            Value: period_name,
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'Dia especial',
+            Value: specialDay,
+        }
+    ]
+});
 
 annotate service.Week with @(
     UI.FieldGroup #GeneratedGroup1: {

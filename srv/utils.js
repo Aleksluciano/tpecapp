@@ -117,14 +117,16 @@ const findAnyUser = (users, desig, designations) => {
       (u) =>
         ((u[dispodayweek[6]] && u[dispodayweek[6]].includes(desig.period)) ||
           (u[dispodayweek[0]] && u[dispodayweek[0]].includes(desig.period))) &&
-        notDesignedYet(u, desig, designations)
+        notDesignedYet(u, desig, designations) &&
+        evenOrOdd(desig.day, u.par, u.impar)
     );
   } else {
     user = users.find(
       (u) =>
         u[dispodayweek[desig.dayWeek]] &&
         u[dispodayweek[desig.dayWeek]].includes(desig.period) &&
-        notDesignedYet(u, desig, designations)
+        notDesignedYet(u, desig, designations) &&
+        evenOrOdd(desig.day, u.par, u.impar)
     );
   }
   return user;
@@ -138,7 +140,8 @@ const findUserByGender = (users, desig, designations, gender_code) => {
         u.gender_code == gender_code &&
         ((u[dispodayweek[6]] && u[dispodayweek[6]].includes(desig.period)) ||
           (u[dispodayweek[0]] && u[dispodayweek[0]].includes(desig.period))) &&
-        notDesignedYet(u, desig, designations)
+        notDesignedYet(u, desig, designations) &&
+        evenOrOdd(desig.day, u.par, u.impar)
     );
   } else {
     user = users.find(
@@ -147,10 +150,26 @@ const findUserByGender = (users, desig, designations, gender_code) => {
         u.gender_code == gender_code &&
         u[dispodayweek[desig.dayWeek]] &&
         u[dispodayweek[desig.dayWeek]].includes(desig.period) &&
-        notDesignedYet(u, desig, designations)
+        notDesignedYet(u, desig, designations) &&
+        evenOrOdd(desig.day, u.par, u.impar)
     );
   }
   return user;
+};
+
+evenOrOdd = (data, par, impar) => {
+  const dia = Number(data.split("-")[2]);
+
+  if (par && impar) return true;
+  if (!par && !impar) return true;
+
+  if (par) {
+    return dia % 2 === 0;
+  }
+
+  if (impar) {
+    return dia % 2 !== 0;
+  }
 };
 const findUserWithPartner = (users, partner_ID) => {
   const user = users.find((u) => u.ID == partner_ID);
@@ -158,9 +177,7 @@ const findUserWithPartner = (users, partner_ID) => {
 };
 
 const notDesignedYet = (u, desig, designations) =>
-  !designations.find(
-    (ud) => ud.user == u.ID && ud.day == desig.day && ud.period == desig.period
-  );
+  !designations.find((ud) => ud.user == u.ID && ud.day == desig.day);
 
 const removeScheduleIncomplete = (designations) => {
   const emptySchedule = designations.filter((d) => d.user == "");

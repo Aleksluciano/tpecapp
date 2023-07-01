@@ -107,7 +107,11 @@ annotate service.Users with @(
             {
                 $Type: 'UI.DataField',
                 Value: desativado,
-            }
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: lastPartner_ID,
+            },
         ],
     },
     UI.FieldGroup #GeneratedGroup2: {
@@ -162,6 +166,19 @@ annotate service.Users with @(
             }
         ],
     },
+    UI.FieldGroup #GeneratedGroup4: {
+        $Type: 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type: 'UI.DataField',
+                Value: par,
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: impar,
+            }
+        ],
+    },
     UI.Facets                     : [
         {
             $Type : 'UI.ReferenceFacet',
@@ -180,13 +197,39 @@ annotate service.Users with @(
             ID    : 'GeneratedFacet3',
             Label : 'Contatos',
             Target: '@UI.FieldGroup#GeneratedGroup3'
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID    : 'GeneratedFacet4',
+            Label : 'Escalar apenas em Dias:',
+            Target: '@UI.FieldGroup#GeneratedGroup4'
         }
     ]
 
 );
 
 annotate service.Users with {
-    partner @(Common: {
+    lastPartner @(Common: {
+        Text           : partner.name,
+        TextArrangement: #TextOnly,
+        ValueList      : {
+            Label         : 'Usuário',
+            CollectionPath: 'Users',
+            Parameters    : [
+                {
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: partner_ID,
+                    ValueListProperty: 'ID',
+                },
+                {
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'name'
+                },
+            ]
+        }
+    });
+
+    partner     @(Common: {
         Text           : partner.name,
         TextArrangement: #TextOnly,
         ValueList      : {
@@ -260,7 +303,7 @@ annotate service.Users with {
         }
     });
 
-    gender  @(Common: {ValueList: {
+    gender      @(Common: {ValueList: {
 
         Label         : 'Sexo',
         CollectionPath: 'Gender',
