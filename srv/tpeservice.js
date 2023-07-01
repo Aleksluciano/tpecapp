@@ -3,7 +3,6 @@ const WeekEntity = "TPEService.Week";
 const UsersEntity = "TPEService.Users";
 const ScheduleEntity = "TPEService.Schedule";
 const PointsEntity = "TPEService.Points";
-const PeriodsEntity = "TPEService.Periods";
 const ReportEntity = "TPEService.Report";
 const {
   shuffle,
@@ -22,27 +21,6 @@ module.exports = cds.service.impl(async function (srv) {
     _checkIfDateForWeekendCodeIsFilled(week);
   });
 
-  // srv.after(["READ"], "Week", (req, each) => {
-  //   const data = req;
-  //   //("aqui1", each.data);
-  //   if (Array.isArray(data))
-  //     data.sort(function (a, b) {
-  //       // console.log(a);
-  //       if (a.nameweek.code < b.nameweek.code) return 1;
-  //       if (a.nameweek.code > b.nameweek.code) return -1;
-
-  //       // If day is the same, sort by point.name
-  //       if (a.point.name < b.point.name) return -1;
-  //       if (a.point.name > b.point.name) return 1;
-
-  //       // If point.name is the same, sort by period.name
-  //       if (a.period.name < b.period.name) return -1;
-  //       if (a.period.name > b.period.name) return 1;
-
-  //       // If all fields are the same, return 0
-  //       return 0;
-  //     });
-  // });
   //PERIODS
   srv.before(["DELETE"], "Periods", async (req) => {
     const period = req.data;
@@ -118,39 +96,6 @@ module.exports = cds.service.impl(async function (srv) {
         );
       });
   });
-
-  // srv.after(["READ"], "Report", async (req) => {
-  //   let data = req;
-
-  //   if (Array.isArray(data)) {
-  //     data.sort(function (a, b) {
-  //       // Sort by day
-  //       const dateA = new Date(a.day);
-  //       const dateB = new Date(b.day);
-
-  //       if (dateA < dateB) return 1;
-  //       if (dateA > dateB) return -1;
-  //       if (
-  //         a.point.name.toLowerCase().trim() < b.point.name.toLowerCase().trim()
-  //       )
-  //         return 1;
-  //       if (
-  //         a.point.name.toLowerCase().trim() > b.point.name.toLowerCase().trim()
-  //       )
-  //         return -1;
-  //       console.log(a.point.name.toLowerCase(), b.point.name.toLowerCase());
-  //       if (a.period.name < b.period.name) return 1;
-  //       if (a.period.name > b.period.name) return -1;
-  //       console.log(a.period.name, b.period.name);
-  //       return 0;
-  //     });
-  //   }
-  //   //if (dateA.getTime() == dateB.getTime()) return 0;
-
-  //   // If day is the same, sort by point.name
-
-  //   // console.log("final", data);
-  // });
 
   //SCHEDULE
   srv.before(["CREATE"], "Schedule", async (req) => {
@@ -513,52 +458,3 @@ module.exports = cds.service.impl(async function (srv) {
     return days;
   }
 });
-
-/*   srv.after("CREATE", "Schedule", async (req) => {
-    setImmediate(async () => {
-      try {
-        // console.log(req)
-        const tx = cds.transaction(req);
-        // const schedules = req.data
-        //console.log("Allanxx",req)
-        //const schedule = schedules[0];
-
-        const weeks = await tx.read("TPEService.Week");
-        const points = await tx.read("TPEService.Points");
-        const periods = await tx.read("TPEService.Periods");
-        const users = await tx.read("TPEService.Users");
-        await tx.commit();
-        //console.log("weeks",weeks);
-        const rangeDate = createSchedule(req);
-        //console.log("rangedate",rangeDate)
-        const designations = createReport(rangeDate, weeks, points);
-        //loop designations
-        const dispodayweek = {
-          0: "dom",
-          1: "seg",
-          2: "ter",
-          3: "qua",
-          4: "qui",
-          5: "sex",
-          6: "sab",
-        };
-        //console.log("users",users)
-        /*     for (const desig of designations) {
-          if(desig.user == ""){
-            //console.log("desig",desig)
-
-            const userIndex = users.findIndex((u) => u[dispodayweek[desig.dayWeek]] && u[dispodayweek[desig.dayWeek]].toString().includes(desig.period.toString()));
-            if(userIndex !== -1)
-            desig.user = users.splice(userIndex, 1)[0].ID;
-
-          }
-
-     //   } */
-
-// console.log("DESIGNATIONS",designations)
-//   } catch (error) {
-//console.error(error);
-//   }
-// });
-// });
-//}); */
