@@ -12,6 +12,7 @@ const {
   findUserByGender,
   findUserWithPartner,
   removeScheduleIncomplete,
+  findUserByGenderNotLastPartner,
 } = require("./utils");
 
 //WEEK
@@ -142,7 +143,7 @@ module.exports = cds.service.impl(async function (srv) {
 
     let date = "";
     let period = "";
-    let userFirstPatner = null;
+    let userFirstPartner = null;
     let gender_changed_already = false;
     // let gende_change = false;
     for (let i = 0; i < designations.length; ) {
@@ -171,7 +172,7 @@ module.exports = cds.service.impl(async function (srv) {
       if (firtAssignDatePeriod) {
         gender_changed_already = false;
         const userFound = findAnyUser(users, desig, designations);
-        userFirstPatner = userFound;
+        userFirstPartner = userFound;
         if (userFound) {
           desig.user = userFound.ID;
           desig.userName = userFound.name;
@@ -179,18 +180,27 @@ module.exports = cds.service.impl(async function (srv) {
           userFound.lastime = desig.day;
         }
       } else {
-        if (userFirstPatner) {
+        if (userFirstPartner) {
           let userFound = null;
-          if (userFirstPatner.partner_ID) {
-            userFound = findUserWithPartner(users, userFirstPatner.partner_ID);
+          if (userFirstPartner.partner_ID) {
+            userFound = findUserWithPartner(users, userFirstPartner.partner_ID);
           }
-          if (!userFirstPatner.partner_ID) {
-            userFound = findUserByGender(
+          if (!userFirstPartner.partner_ID) {
+            //procura primeiro por alguem que não seja o ultimo parceiro
+            userFound = findUserByGenderNotLastPartner(
               users,
               desig,
               designations,
-              userFirstPatner.gender_code
+              userFirstPartner.gender_code
             );
+            if (!userFound) {
+              userFound = findUserByGender(
+                users,
+                desig,
+                designations,
+                userFirstPartner.gender_code
+              );
+            }
           }
 
           if (userFound) {
@@ -213,7 +223,7 @@ module.exports = cds.service.impl(async function (srv) {
 
             const userFoundBack = findAnyUser(users, desig, designations);
 
-            userFirstPatner = userFoundBack;
+            userFirstPartner = userFoundBack;
             if (userFoundBack) {
               i++;
               desigback.user = userFoundBack.ID;
@@ -249,11 +259,26 @@ module.exports = cds.service.impl(async function (srv) {
 
     await cds.run(INSERT.into(ReportEntity).entries(reports)).then((_) => {
       //console.log("inicio");
+      //Update the users lastime and lastdayCount and lastPartner
       for (const rep of reports) {
         // console.log("rep", rep);
+        let lastPartnerFound = reports.find(
+          (a) =>
+            a.user_ID !== rep.user_ID &&
+            a.day === rep.day &&
+            a.period_name === rep.period_name &&
+            a.point_ID === rep.point_ID
+        );
+        //console.log(lastPartnerFound.user_ID);
         cds.run(
           UPDATE(UsersEntity)
-            .set({ lastime: rep.day, lastdayCount: _daysBetweenDates(rep.day) })
+            .set({
+              lastime: rep.day,
+              lastdayCount: _daysBetweenDates(rep.day),
+              lastPartner_ID: lastPartnerFound
+                ? lastPartnerFound.user_ID
+                : null,
+            })
             .where({ ID: rep.user_ID })
         );
       }

@@ -210,7 +210,7 @@ annotate service.Users with @(
 
 annotate service.Users with {
     lastPartner @(Common: {
-        Text           : partner.name,
+        Text           : lastPartner.name,
         TextArrangement: #TextOnly,
         ValueList      : {
             Label         : 'Usuário',
@@ -218,7 +218,7 @@ annotate service.Users with {
             Parameters    : [
                 {
                     $Type            : 'Common.ValueListParameterInOut',
-                    LocalDataProperty: partner_ID,
+                    LocalDataProperty: lastPartner_ID,
                     ValueListProperty: 'ID',
                 },
                 {

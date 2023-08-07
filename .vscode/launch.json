@@ -12,6 +12,16 @@
       ],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "CAP Debug",
+      //put the path of tpeservice.js here
+      "program": "${workspaceRoot}/srv/tsserver.js",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
     }
   ]
 }

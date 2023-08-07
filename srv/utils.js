@@ -157,6 +157,39 @@ const findUserByGender = (users, desig, designations, gender_code) => {
   return user;
 };
 
+const findUserByGenderNotLastPartner = (
+  users,
+  desig,
+  designations,
+  gender_code
+) => {
+  let user = null;
+  if (desig.dayWeek == 8) {
+    user = users.find(
+      (u) =>
+        !u.partner_ID &&
+        u.gender_code == gender_code &&
+        ((u[dispodayweek[6]] && u[dispodayweek[6]].includes(desig.period)) ||
+          (u[dispodayweek[0]] && u[dispodayweek[0]].includes(desig.period))) &&
+        notDesignedYet(u, desig, designations) &&
+        evenOrOdd(desig.day, u.par, u.impar) &&
+        u.lastPartner_ID != desig.user
+    );
+  } else {
+    user = users.find(
+      (u) =>
+        !u.partner_ID &&
+        u.gender_code == gender_code &&
+        u[dispodayweek[desig.dayWeek]] &&
+        u[dispodayweek[desig.dayWeek]].includes(desig.period) &&
+        notDesignedYet(u, desig, designations) &&
+        evenOrOdd(desig.day, u.par, u.impar) &&
+        u.lastPartner_ID != desig.user
+    );
+  }
+  return user;
+};
+
 evenOrOdd = (data, par, impar) => {
   const dia = Number(data.split("-")[2]);
 
@@ -228,4 +261,5 @@ module.exports = {
   removeScheduleIncomplete,
   createSchedule,
   createReport,
+  findUserByGenderNotLastPartner,
 };
