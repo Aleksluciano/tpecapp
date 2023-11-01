@@ -161,31 +161,44 @@ const findUserByGenderNotLastPartner = (
   users,
   desig,
   designations,
-  gender_code
+  gender_code,
+  partner_ID
 ) => {
   let user = null;
   if (desig.dayWeek == 8) {
-    user = users.find(
-      (u) =>
+    user = users.find((u) => {
+      //console.log("u.user_ID", desig);
+      //console.log("u.partner_ID", u.lastPartner_ID);
+      // console.log("u.partnerEQUAL", u.lastPartner_ID != desig.user);
+
+      return (
         !u.partner_ID &&
         u.gender_code == gender_code &&
         ((u[dispodayweek[6]] && u[dispodayweek[6]].includes(desig.period)) ||
           (u[dispodayweek[0]] && u[dispodayweek[0]].includes(desig.period))) &&
         notDesignedYet(u, desig, designations) &&
         evenOrOdd(desig.day, u.par, u.impar) &&
-        u.lastPartner_ID != desig.user
-    );
+        u.lastPartner_ID != partner_ID
+      );
+    });
+    console.log("8findUserByGenderNotLastPartner", user);
   } else {
-    user = users.find(
-      (u) =>
+    user = users.find((u) => {
+      //console.log("u.user_ID", desig);
+      //console.log("u.partner_ID", u.lastPartner_ID);
+      //console.log("u.partnerEQUAL", u.lastPartner_ID != desig.user);
+
+      return (
         !u.partner_ID &&
         u.gender_code == gender_code &&
         u[dispodayweek[desig.dayWeek]] &&
         u[dispodayweek[desig.dayWeek]].includes(desig.period) &&
         notDesignedYet(u, desig, designations) &&
         evenOrOdd(desig.day, u.par, u.impar) &&
-        u.lastPartner_ID != desig.user
-    );
+        u.lastPartner_ID != partner_ID
+      );
+    });
+    console.log("findUserByGenderNotLastPartner", user);
   }
   return user;
 };

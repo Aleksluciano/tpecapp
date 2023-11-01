@@ -187,11 +187,13 @@ module.exports = cds.service.impl(async function (srv) {
           }
           if (!userFirstPartner.partner_ID) {
             //procura primeiro por alguem que não seja o ultimo parceiro
+           // console.log("findUserByGenderNotLastPartner_entra");
             userFound = findUserByGenderNotLastPartner(
               users,
               desig,
               designations,
-              userFirstPartner.gender_code
+              userFirstPartner.gender_code,
+              userFirstPartner.ID
             );
             if (!userFound) {
               userFound = findUserByGender(
