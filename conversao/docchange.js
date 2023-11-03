@@ -2,6 +2,36 @@ const ExcelJS = require("exceljs");
 
 //import 'core-js/actual/Map';
 
+function changeColor(cell, diasemana, type) {
+  //color white in rgb
+  let color = "FFFFFFFF";
+  if (diasemana == "Segunda" && type == "P") color = "C4D79B";
+  if (diasemana == "Segunda" && type == "H") color = "EBF1DE";
+  if (diasemana == "Terça" && type == "P") color = "95B3D7";
+  if (diasemana == "Terça" && type == "H") color = "DCE6F1";
+  if (diasemana == "Quarta" && type == "P") color = "F2DCDB";
+  if (diasemana == "Quarta" && type == "H") color = "F8F2F1";
+  if (diasemana == "Quinta" && type == "P") color = "FABF8F";
+  if (diasemana == "Quinta" && type == "H") color = "FDE9D9";
+  if (diasemana == "Sexta" && type == "P") color = "B1A0C7";
+  if (diasemana == "Sexta" && type == "H") color = "E4DFEC";
+  if (diasemana == "Sábado" && type == "P") color = "8DB4E2";
+  if (diasemana == "Sábado" && type == "H") color = "DAEEF3";
+  if (diasemana == "Domingo" && type == "P") color = "E6B8B7";
+  if (diasemana == "Domingo" && type == "H") color = "F2DCDB";
+  cell.fill = {
+    type: "pattern",
+    pattern: "solid",
+    fgColor: { argb: color }, // Código ARGB para cinza claro
+  };
+  cell.border = {
+    top: { style: "thin" },
+    left: { style: "thin" },
+    bottom: { style: "thin" },
+    right: { style: "thin" },
+  };
+}
+
 async function readAndWriteExcel(readFilePath, writeFilePath) {
   // Create a new workbook instance
   const workbook = new ExcelJS.Workbook();
@@ -57,6 +87,12 @@ async function readAndWriteExcel(readFilePath, writeFilePath) {
       pattern: "solid",
       fgColor: { argb: "FFD9D9D9" }, // Código ARGB para cinza claro
     };
+    mergedCell.border = {
+      top: { style: "thin" },
+      left: { style: "thin" },
+      bottom: { style: "thin" },
+      right: { style: "thin" },
+    };
 
     //console.log(value.periodo.entries())
     // Adiciona os cabeçalhos
@@ -80,11 +116,14 @@ async function readAndWriteExcel(readFilePath, writeFilePath) {
     cell.alignment = { vertical: "middle", horizontal: "center" };
     cell.font = { name: "Calibri", bold: true, size: 11 };
 
+    changeColor(cell, value.diasemana, "P");
+
     if (vals.length == 1) {
       worksheetOut.mergeCells(`B${lastRowNumber}:E${lastRowNumber}`);
       cell = worksheetOut.getCell(`B${lastRowNumber}`);
       cell.alignment = { vertical: "middle", horizontal: "center" };
       cell.font = { name: "Calibri", bold: true, size: 12 };
+      changeColor(cell, value.diasemana, "H");
     }
 
     if (vals.length == 2) {
@@ -92,22 +131,27 @@ async function readAndWriteExcel(readFilePath, writeFilePath) {
       let cell = worksheetOut.getCell(`B${lastRowNumber}`);
       cell.alignment = { vertical: "middle", horizontal: "center" };
       cell.font = { name: "Calibri", bold: true, size: 12 };
+      changeColor(cell, value.diasemana, "H");
       worksheetOut.mergeCells(`D${lastRowNumber}:E${lastRowNumber}`);
       cell = worksheetOut.getCell(`D${lastRowNumber}`);
       cell.alignment = { vertical: "middle", horizontal: "center" };
       cell.font = { name: "Calibri", bold: true, size: 12 };
+      changeColor(cell, value.diasemana, "P");
     }
     if (vals.length == 3) {
       worksheetOut.mergeCells(`C${lastRowNumber}:D${lastRowNumber}`);
       let cell = worksheetOut.getCell(`C${lastRowNumber}`);
       cell.alignment = { vertical: "middle", horizontal: "center" };
       cell.font = { name: "Calibri", bold: true, size: 12 };
+      changeColor(cell, value.diasemana, "H");
       cell = worksheetOut.getCell(`B${lastRowNumber}`);
       cell.alignment = { vertical: "middle", horizontal: "center" };
       cell.font = { name: "Calibri", bold: true, size: 12 };
+      changeColor(cell, value.diasemana, "H");
       cell = worksheetOut.getCell(`E${lastRowNumber}`);
       cell.alignment = { vertical: "middle", horizontal: "center" };
       cell.font = { name: "Calibri", bold: true, size: 12 };
+      changeColor(cell, value.diasemana, "H");
     }
 
     // Adiciona os valores
@@ -121,6 +165,7 @@ async function readAndWriteExcel(readFilePath, writeFilePath) {
         let cell = worksheetOut.getCell(`B${lastRowNumber}`);
         cell.alignment = { vertical: "middle", horizontal: "center" };
         cell.font = { name: "Calibri", bold: false, size: 11 };
+        changeColor(cell, value.diasemana, "H");
       }
 
       if (publicadores.length == 2) {
@@ -135,10 +180,12 @@ async function readAndWriteExcel(readFilePath, writeFilePath) {
         let cell = worksheetOut.getCell(`B${lastRowNumber}`);
         cell.alignment = { vertical: "middle", horizontal: "center" };
         cell.font = { name: "Calibri", bold: false, size: 11 };
+        changeColor(cell, value.diasemana, "H");
         worksheetOut.mergeCells(`D${lastRowNumber}:E${lastRowNumber}`);
         cell = worksheetOut.getCell(`D${lastRowNumber}`);
         cell.alignment = { vertical: "middle", horizontal: "center" };
         cell.font = { name: "Calibri", bold: false, size: 11 };
+        changeColor(cell, value.diasemana, "P");
       }
       if (publicadores.length == 3) {
         worksheetOut.addRow([
@@ -160,6 +207,7 @@ async function readAndWriteExcel(readFilePath, writeFilePath) {
           wrapText: true,
         };
         cell.font = { name: "Calibri", bold: false, size: 11 };
+        changeColor(cell, value.diasemana, "H");
         cell = worksheetOut.getCell(`B${lastRowNumber}`);
         cell.alignment = {
           vertical: "middle",
@@ -167,6 +215,7 @@ async function readAndWriteExcel(readFilePath, writeFilePath) {
           wrapText: true,
         };
         cell.font = { name: "Calibri", bold: false, size: 11 };
+        changeColor(cell, value.diasemana, "H");
         cell = worksheetOut.getCell(`E${lastRowNumber}`);
         cell.alignment = {
           vertical: "middle",
@@ -174,6 +223,7 @@ async function readAndWriteExcel(readFilePath, writeFilePath) {
           wrapText: true,
         };
         cell.font = { name: "Calibri", bold: false, size: 11 };
+        changeColor(cell, value.diasemana, "H");
       }
     }
 
@@ -186,6 +236,7 @@ async function readAndWriteExcel(readFilePath, writeFilePath) {
       wrapText: true,
     };
     mergedCell.font = { name: "Calibri", bold: true, size: 11 };
+    changeColor(mergedCell, value.diasemana, "P");
 
     // Adiciona uma linha em branco entre os conjuntos de dados
     worksheetOut.addRow([]);
@@ -249,7 +300,7 @@ class Lines {
 }
 
 // // Replace 'path_to_your_file.xlsx' and 'new_file_path.xlsx' with actual file paths
-const readFilePath = "export.xlsx";
+const readFilePath = "Report.xlsx";
 const writeFilePath = "CarrinhoFormatado.xlsx";
 //
 // // Call the function
