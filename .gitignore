@@ -23,6 +23,8 @@ mta_archives/
 *.orig
 *.log
 
+conversao/*.xlsx
+
 *.iml
 *.flattened-pom.xml
 
